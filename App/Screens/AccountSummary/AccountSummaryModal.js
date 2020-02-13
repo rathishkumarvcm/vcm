@@ -14,6 +14,7 @@ class AccountSummaryModal extends Component {
       groupName: "",
       selectedItems: [],
       listOfAllAccounts: [],
+      selectedGroupID:null
     };
 
     this.multiSelect = null;
@@ -23,12 +24,58 @@ class AccountSummaryModal extends Component {
     this.getAllAccounts();
   }
 
+  static getDerivedStateFromProps(props, prevState) {
+    console.log("getDerivedStateFromProps");
+
+    const { groups, groupID } = props;
+
+    console.log("groups => ", groups);
+    console.log("groupID => ", groupID);
+
+    if(groupID !== undefined && groupID !== null && prevState.selectedGroupID !== props.groupID) {
+      const selectedGroup = groups.filter((group) => group.groupID === groupID );
+      const selectedGroupName = selectedGroup[0].groupName;
+      const selectedItems = selectedGroup[0].accounts.map(
+        (account) => {
+          return account.accountID;
+        }
+      );  
+
+      console.log("selectedGroupName => ", selectedGroupName);
+      console.log("selectedItems => ", selectedItems);  
+
+      return {selectedItems, groupName:selectedGroupName, selectedGroupID: groupID};
+    }
+
+    return {selectedGroupID: groupID};
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+  }
+
   onSelectedItemsChange = selectedItems => {
     this.setState({ selectedItems });
   };
 
   getAllAccounts = () => {
-    const { groups } = this.props;
+
+    const { groups, groupID } = this.props;
+
+    if(groupID !== undefined && groupID !== null ) {
+      const selectedGroup = groups.filter((group) => group.groupID === groupID );
+      const selectedGroupName = selectedGroup[0].groupName;
+      const selectedItems = selectedGroup[0].accounts.map(
+        (account) => {
+          return account.accountID;
+        }
+      );  
+
+      console.log("selectedGroupName => ", selectedGroupName);
+      console.log("selectedItems => ", selectedItems);  
+    }
+
+
     const accountList = [];
     groups.forEach(element => {
       accountList.push(...element.accounts);
@@ -48,6 +95,10 @@ class AccountSummaryModal extends Component {
     return unique;
   }
 
+  createRandomNumber = () => {
+    return Math.floor(Math.random() * 90000) + 10000;
+  }
+
   onClickAddAccount = () => {
     const { onClickAdd } = this.props;
     const { groupName, listOfAllAccounts } = this.state;
@@ -64,7 +115,12 @@ class AccountSummaryModal extends Component {
     });
 
     if (groupName && selectedAccounts.length !== 0) {
-      const newHoldingGroup = { "groupName": groupName, "selectedAccounts": selectedAccounts };
+      const randomGroupID = this.createRandomNumber();
+
+      const { selectedGroupID } = this.state;
+
+      const newHoldingGroup = { "groupName": groupName, "accounts": selectedAccounts, "groupID": selectedGroupID || randomGroupID};
+      
       onClickAdd(newHoldingGroup);
 
       // Remove the modal data.
@@ -95,8 +151,8 @@ class AccountSummaryModal extends Component {
 
 
   addNewGroupModal = () => {
-    const { groupName, selectedItems, listOfAllAccounts } = this.state;
-    const { showAddGroupModal } = this.props;
+    const { groupName, selectedItems, listOfAllAccounts, selectedGroupID } = this.state;
+    const { showAddGroupModal, groupID } = this.props;
 
     return (
       <Modal
@@ -183,15 +239,17 @@ AccountSummaryModal.propTypes = {
   showAddGroupModal: PropTypes.instanceOf(Boolean),
   groups: PropTypes.instanceOf(Array),
   onClickAdd: PropTypes.func,
-  onClickCancel: PropTypes.func
+  onClickCancel: PropTypes.func,
+  groupID: PropTypes.instanceOf(String)
 
 };
 
 AccountSummaryModal.defaultProps = {
   showAddGroupModal: false,
   groups: [],
-  onClickAdd: () => { },
-  onClickCancel: () => { }
+  onClickAdd: () => {},
+  onClickCancel: () => {},
+  groupID: ''
 };
 
 

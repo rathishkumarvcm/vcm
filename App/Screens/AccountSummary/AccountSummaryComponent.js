@@ -13,6 +13,7 @@ class AccountSummaryComponent extends Component {
     this.state = {
       groups: [],
       showAddGroupModal: false,
+      selectedGroupID: null
     };
   }
 
@@ -41,6 +42,7 @@ class AccountSummaryComponent extends Component {
           data={item.accounts}
           group={groups[Number(index)]}
           removeGroup={this.removeGroupFromList}
+          addAccount={this.addAccountToGroup}
         />
       );
     });
@@ -64,7 +66,7 @@ class AccountSummaryComponent extends Component {
   }
 
   hide = () => {
-    this.setState({ showAddGroupModal: false });
+    this.setState({ showAddGroupModal: false, selectedGroupID: null });
   }
 
   show = () => {
@@ -85,15 +87,15 @@ class AccountSummaryComponent extends Component {
 
   onClickAdd = (holdingGroup) => {
     // this.show();
-    const randomGroupID = this.createRandomNumber();
+    // const randomGroupID = this.createRandomNumber();
     const { addHoldingGroup } = this.props;
-    if (holdingGroup.groupName && holdingGroup.selectedAccounts.length !== 0) {
-      const newHoldingGroup = {
-        "groupName": holdingGroup.groupName,
-        "groupID": randomGroupID,
-        "accounts": holdingGroup.selectedAccounts,
-      };
-      addHoldingGroup(newHoldingGroup);
+    if (holdingGroup.groupName && holdingGroup.accounts.length !== 0) {
+      // const newHoldingGroup = {
+      //   "groupName": holdingGroup.groupName,
+      //   "groupID": randomGroupID,
+      //   "accounts": holdingGroup.selectedAccounts,
+      // };
+      addHoldingGroup(holdingGroup);
       this.hide();
     }
     else {
@@ -111,12 +113,31 @@ class AccountSummaryComponent extends Component {
     }
   }
 
+  addAccountToGroup = (selectedGroupID) => {
+
+    const { groups } = this.state;
+    if (selectedGroupID) {
+      const updatedGroup = groups.filter((group) => group.groupID === selectedGroupID );
+      console.log("updatedGroup => ", updatedGroup);
+    }
+    this.setState({ showAddGroupModal: true, selectedGroupID});
+
+    // const { groups } = this.state;
+    // const { removeHoldingGroup } = this.props;
+
+    // if (groupID) {
+    //   const updatedGroup = groups.filter((group) => group.groupID !== groupID );
+    //   removeHoldingGroup(updatedGroup);
+    // }
+  }
+
+
   render() {
     const { navigation } = this.props;
-    const { groups, showAddGroupModal } = this.state;
+    const { groups, showAddGroupModal, selectedGroupID } = this.state;
     return (
       <View style={styles.container}>
-        <AccountSummaryModal showAddGroupModal={showAddGroupModal} groups={groups} onClickAdd={this.onClickAdd} onClickCancel={this.onClickCancel} />
+        <AccountSummaryModal showAddGroupModal={showAddGroupModal} groups={groups} groupID={selectedGroupID} onClickAdd={this.onClickAdd} onClickCancel={this.onClickCancel} />
         <GHeaderComponent navigation={navigation} />
         {this.tableHeader()}
         <ScrollView style={styles.scrollView}>

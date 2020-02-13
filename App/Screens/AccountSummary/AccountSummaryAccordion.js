@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, FlatList } from "react-native";
+import { View, TouchableOpacity, Text, FlatList, InteractionManager } from "react-native";
 import PropTypes from 'prop-types';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import { accordianStyles } from './styles';
@@ -69,7 +69,11 @@ export default class AccountSummaryAccordion extends Component {
         this.groupMenu.show();
     };
 
-    addAccountInGroup = () => {
+    addAccountInGroup = (groupId) => () => {
+        const { addAccount } = this.props;
+        InteractionManager.runAfterInteractions(() => {
+            addAccount(groupId);
+        });
         this.hideGroupMenu();
     }
 
@@ -198,7 +202,7 @@ export default class AccountSummaryAccordion extends Component {
                     )}
                 >
                     <MenuDivider />
-                    <MenuItem onPress={this.addAccountInGroup}>{GlobalStrings.accountSummary.addAccount}</MenuItem>
+                    <MenuItem onPress={this.addAccountInGroup(group.groupID)}>{GlobalStrings.accountSummary.addAccount}</MenuItem>
                     <MenuDivider />
                     <MenuItem onPress={this.removeGroup(group.groupID)}>{GlobalStrings.accountSummary.removeGroup}</MenuItem>
                     <MenuDivider />
@@ -236,11 +240,13 @@ export default class AccountSummaryAccordion extends Component {
 AccountSummaryAccordion.propTypes = {
     data: PropTypes.instanceOf(Array),
     group: PropTypes.instanceOf(Object),
+    addAccount: PropTypes.func,
     removeGroup: PropTypes.func
 };
 
 AccountSummaryAccordion.defaultProps = {
     data: [],
     group: {},
-    removeGroup: () => { },
+    addAccount: () => {},
+    removeGroup: () => {},
 };
