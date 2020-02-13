@@ -5,7 +5,7 @@ import { scaledHeight} from '../Utils/Resolution';
 import backArrow from '../Images/backArrow.png';
 
 /* **************************\
-  Function: GToolBarComponent
+  Function: GTitleBarComponent
   Explanation:  
 \************************** */
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     }       
 });
 
-const GToolBarComponent = props => {
+const GTitleBarComponent = props => {
     const {toolbarTiltle,backPress}=props;
     return(
         <View style={styles.toolBarContainer}>
@@ -58,14 +58,14 @@ const GToolBarComponent = props => {
     );
 };
 
-GToolBarComponent.propTypes = {  
+GTitleBarComponent.propTypes = {  
     toolbarTiltle: PropTypes.string,
     backPress: PropTypes.func   
 };
 
-GToolBarComponent.defaultProps = {
+GTitleBarComponent.defaultProps = {
       toolbarTiltle: "",  
     backPress : () => {}
 };
 
-export default GToolBarComponent;
+export default GTitleBarComponent;

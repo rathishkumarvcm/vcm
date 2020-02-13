@@ -1538,7 +1538,6 @@ export default {
         all: "All",
         popular: "Popular"
     },
-<<<<<<< Updated upstream
     accountSummary: {
         placeAnOrder: "Place an Order",
         viewAccountActivity: "View Account Activity",
@@ -1548,8 +1547,7 @@ export default {
         removeAccount: "Remove Account",
         addAccount: "Add Account",
         removeGroup: "Remove Group",
-=======
-
+    },
     loginComponent:{
         enterOnlineId:"Enter Online ID",
         enterPassword:"Enter Password",
@@ -1560,6 +1558,5 @@ export default {
         signIn:"Sign In",
         byClicking:"By clicking “Sign In” I agree to the Victory Capital ",
         termsOfUse:"Terms of Use."
->>>>>>> Stashed changes
     }
 };

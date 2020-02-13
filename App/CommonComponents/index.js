@@ -27,7 +27,7 @@ import GCollapseComponent from './GCollapseComponent';
 import GSingletonClass from './GSingletonClass';
 import {GBankAccValidateComponent} from './GBankAccValidateComponent';
 import {GAddressValidateComponent} from './GAddressValidateComponent';
-import GToolBarComponent from './GToolBarComponent';
+import GTitleBarComponent from './GTitleBarComponent';
 
 import {
     SetKeyValueToStore,
@@ -72,5 +72,5 @@ export {
     GBankAccValidateComponent,
     GAddressValidateComponent,
     GErrorBoundaries,
-    GToolBarComponent,
+    GTitleBarComponent,
 };
