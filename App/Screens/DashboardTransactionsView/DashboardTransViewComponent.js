@@ -36,16 +36,16 @@ class DashboardTransViewComponent extends Component {
 
     sortByDate = (array, key) => {
         return array.sort((a, b) => {
-            const x = a[key];
-            const y = b[key];
+            const x = a[`${key}`];
+            const y = b[`${key}`];
             return this.splitDate(x).getTime() - this.splitDate(y).getTime();
         });
     }
 
     sortByKey = (array, key) => {
         return array.sort((a, b) => {
-            const x = a[key];
-            const y = b[key];
+            const x = a[`${key}`];
+            const y = b[`${key}`];
             // return ((x < y) ? -1 : ((x > y) ? 1 : 0));
             if (x < y) {
                 return -1;
@@ -58,11 +58,12 @@ class DashboardTransViewComponent extends Component {
 
     sortByPrice = (array, key) => {
         for (let i = 0; i < array.length; i += 1) {
-            array[parseInt(i, 0)].price = Number(array[parseInt(i, 0)].price.replace(/(^\$|,)/g, ''));
+            const a = array[parseInt(i, 0)].price
+            a = Number(array[parseInt(i, 0)].price.replace(/(^\$|,)/g, ''));
         }
         return array.sort((a, b) => {
-            const x = a[key];
-            const y = b[key];
+            const x = a[`${key}`];
+            const y = b[`${key}`];
             if (x < y) {
                 return -1;
             } if (x > y) {
@@ -77,8 +78,8 @@ class DashboardTransViewComponent extends Component {
             array[parseInt(i, 0)].value = Number(array[parseInt(i, 0)].value.replace(/(^\$|,)/g, ''));
         }
         return array.sort((a, b) => {
-            const x = a[key];
-            const y = b[key];
+            const x = a[`${key}`];
+            const y = b[`${key}`];
             if (x < y) {
                 return -1;
             } if (x > y) {
