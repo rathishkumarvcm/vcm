@@ -8,6 +8,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import AttachmentData from './AttachmentData';
 import arrayStyles from './arrayStyles';
+import * as COLORS from "../../Constants/ColorConstants";
 
 const topicData = [
     { "key": "1", "value": "Investment Advice" },
@@ -187,7 +188,7 @@ class FloatingButtonComponent extends React.Component {
             <SafeAreaView style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <View style={styles.container}>
-                    <ActionButton buttonColor="skyblue" onPress={this.toggleModal}>
+                    <ActionButton buttonColor={COLORS.SECONDARY_DARK_COLOR} onPress={this.toggleModal}>
                         <GIcon
                             name="plus"
                             type="material"

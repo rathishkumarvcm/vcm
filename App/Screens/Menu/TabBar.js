@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
 import arrayStyles from './arrayStyles';
+import * as COLORS from "../../Constants/ColorConstants";
 
 
 const styles = StyleSheet.create({
@@ -34,7 +35,7 @@ const TabBar = props => {
     <View style={styles.container}>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
-        const tintColor = isRouteActive ? "skyblue" : "#4F4F4F";
+        const tintColor = isRouteActive ? COLORS.PRIMARY_DARK_COLOR : "#4F4F4F";
         return (
           <View style={styles.tabButton}>
             <TouchableOpacity
