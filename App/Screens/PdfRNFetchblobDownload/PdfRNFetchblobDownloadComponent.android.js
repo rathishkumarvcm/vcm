@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { View,Text,StyleSheet,Platform, Share, PermissionsAndroid } from 'react-native';
+import { View,Text,StyleSheet,/* Platform, */ Share, PermissionsAndroid } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 import PropTypes from 'prop-types';
 import {GButtonComponent} from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
+import AppUtils from '../../Utils/AppUtils';
 
-const url = 'http:// www.africau.edu/Images/default/sample.pdf';
+const url = 'http://www.africau.edu/images/default/sample.pdf';
 
 
 
-const { fs: { dirs } } = RNFetchBlob;
+// const { fs: { dirs } } = RNFetchBlob;
 // const PATH_TO_LIST = dirs.DocumentDir;
 // const dest = `${PATH_TO_LIST}/big_buck_bunny_720p_10mb.pdf`;
 // const tmpPath = `${dest}.download`;
@@ -70,7 +71,8 @@ class PdfRNFetchblobDownload extends Component {
               //  dismissed
           }
       } catch (error) {
-          alert(error.message);
+        AppUtils.debugLog(error.message);
+        // alert(error.message);
       }
     }
 
@@ -83,25 +85,17 @@ class PdfRNFetchblobDownload extends Component {
         navigation.goBack();
     }
 
-
-    async downloadPDFIOS () {
-      const {navigation} = this.props;
-      const setCache = navigation.getParam('cache');
-      RNFetchBlob.config({
-        fileCache: setCache,
-        appendExt : 'pdf'
-      })
-      .fetch('GET', url, {
-      // some headers ..
-      })
-      .then((res) => {
-        console.log('The file saved to ', JSON.stringify(res));
-        this.shareOptions(res.path());
-      }).error((error) => {
-       console.log("Error",error);
-      });
-  }
-
+    onPressDownLoadPDF = () =>{
+      /* if(Platform.OS === 'android') {
+         this.downloadPDF();
+       }else{
+         this.downloadPDFIOS();
+       }
+       */
+ 
+       this.downloadPDF();
+     }
+ 
     async downloadPDF () {
       const {navigation} = this.props;
       const setCache = navigation.getParam('cache');
@@ -123,12 +117,34 @@ class PdfRNFetchblobDownload extends Component {
             })
             .then((res) => {
             
-              console.log('The file saved to ', JSON.stringify(res));
+              AppUtils.debugLog('The file saved to ', JSON.stringify(res));
               
             })
-            .catch((error) => { console.log(error); });
+            .catch((error) => { AppUtils.debugLog(error); });
           }
     }
+
+    /*
+    async downloadPDFIOS () {
+      const {navigation} = this.props;
+      const setCache = navigation.getParam('cache');
+      RNFetchBlob.config({
+        fileCache: setCache,
+        appendExt : 'pdf'
+      })
+      .fetch('GET', url, {
+      // some headers ..
+      })
+      .then((res) => {
+        AppUtils.debugLog('The file saved to ', JSON.stringify(res));
+        this.shareOptions(res.path());
+      }).error((error) => {
+        AppUtils.debugLog("Error",error);
+      });
+  }
+  */
+
+
     
 
     render(){
@@ -140,7 +156,7 @@ class PdfRNFetchblobDownload extends Component {
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
                     buttonText= "Download PDF"
-                    onPress={()=>Platform.OS === 'android' ? this.downloadPDF() : this.downloadPDFIOS()}
+                    onPress={this.onPressDownLoadPDF}
                 />
 
                  <GButtonComponent 
