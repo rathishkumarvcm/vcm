@@ -26,7 +26,7 @@ export default class AccountSummaryAccordion extends Component {
     }
 
     static getDerivedStateFromProps (props, prevState) {
-        if(props.data !== prevState.data) {
+        if(props.data.length !== prevState.data.length) {
             return { data: props.data };
         }
         return null;

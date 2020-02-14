@@ -176,9 +176,35 @@ const modalStyles = StyleSheet.create({
         marginRight: '4%',
         width: '92%',
     },
-    multiSelectSearchInputStyle: {marginLeft: 0, marginRight: 0},
-    multiSelectStyleInputGroup: { marginLeft: 30, marginRight: 30},
-    multiSelectStyleTextDropdown: { marginLeft: 0, marginRight: 0},
+    multiSelectSearchInputStyle: {
+        color: '#B5B5B5',
+        fontSize: scaledHeight(16),
+        justifyContent: 'center',
+        // marginLeft: scaledHeight(14),
+        // marginRight: 0
+    },
+    multiSelectStyleInputGroup: {
+        backgroundColor: "#FFFFFF",
+        borderColor: "#DEDEDF",
+        borderRadius: scaledHeight(4),
+        borderWidth: 1,
+        height: scaledHeight(48),
+        justifyContent: "center",
+        marginLeft: '4%',
+        marginRight: '4%',
+        width: '92%',
+    },
+    multiSelectStyleTextDropdown: {
+        color: '#B5B5B5',
+        fontSize: scaledHeight(16),
+        justifyContent: 'center',
+        marginLeft: scaledHeight(14),
+    },
+
+    rowList: {
+        paddingBottom: 8,
+        paddingTop: 8
+    },
     selectAccountText: {
         color: '#333333DE',
         fontSize: scaledHeight(20),
@@ -189,6 +215,21 @@ const modalStyles = StyleSheet.create({
         marginTop: scaledHeight(34),
         paddingLeft: '4%',
         paddingRight: '4%',
+    },
+    textDropDownItemContainer: {
+        color: '#B5B5B5',
+        fontSize: scaledHeight(14),
+        justifyContent: 'center',
+        marginLeft: scaledHeight(14),
+        paddingBottom: 10, 
+        paddingTop: 10
+    },
+    textDropDownSelected: {
+        color: '#B5B5B5',
+        fontSize: scaledHeight(16),
+        justifyContent: 'center',
+        marginLeft: scaledHeight(14),
+        marginRight: 0
     }
 });
 
@@ -312,7 +353,7 @@ const accordianStyles = StyleSheet.create({
         width: '100%'
     },
     plusMinusView: {
-        alignItems: 'center', 
+        alignItems: 'center',
         flexDirection: 'row'
     }
 });

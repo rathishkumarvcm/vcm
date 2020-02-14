@@ -6,7 +6,6 @@ import { modalStyles } from './styles';
 import { GButtonComponent, GInputComponent, showAlert } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
 
-
 class AccountSummaryModal extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +13,7 @@ class AccountSummaryModal extends Component {
       groupName: "",
       selectedItems: [],
       listOfAllAccounts: [],
-      selectedGroupID:null
+      selectedGroupID: null
     };
 
     this.multiSelect = null;
@@ -26,18 +25,18 @@ class AccountSummaryModal extends Component {
 
   static getDerivedStateFromProps(props, prevState) {
     const { groups, groupID } = props;
-    if(groupID !== undefined && groupID !== null && prevState.selectedGroupID !== props.groupID) {
-      const selectedGroup = groups.filter((group) => group.groupID === groupID );
+    if (groupID !== undefined && groupID !== null && prevState.selectedGroupID !== props.groupID) {
+      const selectedGroup = groups.filter((group) => group.groupID === groupID);
       const selectedGroupName = selectedGroup[0].groupName;
       const selectedItems = selectedGroup[0].accounts.map(
         (account) => {
           return account.accountID;
         }
-      );  
-      return {selectedItems, groupName:selectedGroupName, selectedGroupID: groupID};
+      );
+      return { selectedItems, groupName: selectedGroupName, selectedGroupID: groupID };
     }
 
-    return {selectedGroupID: groupID};
+    return { selectedGroupID: groupID };
   }
 
   onSelectedItemsChange = selectedItems => {
@@ -101,8 +100,8 @@ class AccountSummaryModal extends Component {
 
       const { selectedGroupID } = this.state;
 
-      const newHoldingGroup = { "groupName": groupName, "accounts": selectedAccounts, "groupID": selectedGroupID || randomGroupID};
-      
+      const newHoldingGroup = { "groupName": groupName, "accounts": selectedAccounts, "groupID": selectedGroupID || randomGroupID };
+
       onClickAdd(newHoldingGroup);
 
       // Remove the modal data.
@@ -129,7 +128,7 @@ class AccountSummaryModal extends Component {
 
   setGroupMenuRef = component => {
     this.multiSelect = component;
-};
+  };
 
 
   addNewGroupModal = () => {
@@ -174,7 +173,6 @@ class AccountSummaryModal extends Component {
               selectedItemIconColor="#5B89B5"
               itemTextColor="#000"
               displayKey="accountName"
-              // searchInputStyle={{ color: '#CCC' }}
               submitButtonColor="#CCC"
               hideSubmitButton
               hideDropdown
@@ -184,6 +182,10 @@ class AccountSummaryModal extends Component {
               styleTextDropdown={modalStyles.multiSelectStyleTextDropdown}
               searchIcon={false}
               styleDropdownMenu={modalStyles.multiSelectDropDownMenu}
+              styleItemsContainer={modalStyles.textDropDownItemContainer}
+              styleRowList = {modalStyles.rowList}
+              styleTextDropdownSelected={modalStyles.textDropDownSelected}
+
             />
 
             <View style={modalStyles.modalButtonView}>
@@ -218,7 +220,7 @@ class AccountSummaryModal extends Component {
 
 
 AccountSummaryModal.propTypes = {
-  showAddGroupModal: PropTypes.instanceOf(Boolean),
+  showAddGroupModal: PropTypes.bool,
   groups: PropTypes.instanceOf(Array),
   onClickAdd: PropTypes.func,
   onClickCancel: PropTypes.func,
@@ -229,8 +231,8 @@ AccountSummaryModal.propTypes = {
 AccountSummaryModal.defaultProps = {
   showAddGroupModal: false,
   groups: [],
-  onClickAdd: () => {},
-  onClickCancel: () => {},
+  onClickAdd: () => { },
+  onClickCancel: () => { },
   groupID: ''
 };
 
