@@ -62,13 +62,13 @@ pipeline {
                     // sh 'gem install json -v "2.3.0"'
                     sh 'bundle exec fastlane beta'
                 }
-                // dir('android')
-                // {
-                //     sh 'echo AndroidBuild'
-                //     sh 'bundle install'
-                //     sh 'bundle update fastlane'
-                //     sh 'bundle exec fastlane beta'
-                // }
+                dir('android')
+                {
+                    sh 'echo AndroidBuild'
+                    sh 'bundle install'
+                    sh 'bundle update fastlane'
+                    sh 'bundle exec fastlane beta'
+                }
             }
         }
 
@@ -85,13 +85,13 @@ pipeline {
         //             // sh 'gem install json -v "2.3.0"'
         //             sh '/usr/local/opt/ruby/bin/bundle exec /usr/local/bin/fastlane beta'
         //         }
-        //         // dir('android')
-        //         // {
-        //         //     sh 'echo AndroidBuild'
-        //         //     sh '/usr/local/opt/ruby/bin/bundle install'
-        //         //     sh '/usr/local/opt/ruby/bin/bundle update fastlane'
-        //         //     sh '/usr/local/opt/ruby/bin/bundle exec /usr/local/bin/fastlane beta'
-        //         // }
+        //         dir('android')
+        //         {
+        //             sh 'echo AndroidBuild'
+        //             sh '/usr/local/opt/ruby/bin/bundle install'
+        //             sh '/usr/local/opt/ruby/bin/bundle update fastlane'
+        //             sh '/usr/local/opt/ruby/bin/bundle exec /usr/local/bin/fastlane beta'
+        //         }
         //     }
         // }
     }
