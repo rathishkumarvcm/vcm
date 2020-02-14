@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, Platform, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Platform, View ,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tabMoreActions } from '../../Shared/Actions';
-import { GIcon } from '../../CommonComponents/GIcon';
 import arrayStyles from './arrayStyles';
 import * as COLORS from "../../Constants/ColorConstants";
 import { scaledHeight } from '../../Utils/Resolution';
+// import inactiveMore from '../../Images/tabMore.png';
+import activeMore from '../../Images/tabMore.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,12 +61,13 @@ const TabBar = props => {
         style={styles.tabButton}
         onPress={setMoreModalVisible(true)}
       >
-        <GIcon
+        <Image source={activeMore} />
+        {/* <GIcon
           name="more"
           type="material"
           size={20}
           color={COLORS.GRAY}
-        />
+        /> */}
         <Text style={styles.tabLabelText}>More</Text>
       </TouchableOpacity>
     </View>

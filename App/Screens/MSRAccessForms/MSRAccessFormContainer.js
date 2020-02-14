@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
-import AccessFormList from './AccessFormsList';
+import MSRAccessFormList from './MSRAccessFormsList';
 import { msrAccessFormActions } from "../../Shared/Actions";
 
 const mapStateToProps = state => {
@@ -15,4 +15,4 @@ const mapDispatchToProps = {
 //     dispatch,
 //     ...msrAccessFormActions
 // }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(AccessFormList);
+export default connect(mapStateToProps, mapDispatchToProps)(MSRAccessFormList);

@@ -31,6 +31,12 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         width: '100%',
     },
+    fabButton:{
+        alignItems:'center',
+        backgroundColor: "orange", borderRadius: 25, elevation:5,
+        height: 50,
+        justifyContent: 'center', width: 50,
+    },
     grayBoldText: {
         color: 'gray',
         fontWeight: '500',

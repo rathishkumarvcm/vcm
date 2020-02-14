@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text, View, ScrollView, TextInput, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Linking, Platform } from 'react-native';
-import ActionButton from 'react-native-action-button';
 import Modal from 'react-native-modal';
 import PropTypes from "prop-types";
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
-import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent, showAlertWithCancelButton } from '../../CommonComponents';
+import { GIcon, GDashBoardContainer, GDropDownComponent, GInputComponent, GButtonComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import AttachmentData from './AttachmentData';
 import arrayStyles from './arrayStyles';
 import * as COLORS from "../../Constants/ColorConstants";
@@ -19,15 +18,15 @@ const topicData = [
     { "key": "6", "value": "Others" },
 ];
 
-const accountData = [
-    { "key": "1", "value": "34XXXXX XX25" },
-    { "key": "2", "value": "52XXXXX XX74" },
-    { "key": "3", "value": "85XXXXX XXX99" },
-    { "key": "4", "value": "10XXXXX XX07" },
-    { "key": "5", "value": "97XXXXX XX11" },
-    { "key": "6", "value": "11XXXXX XXX24" },
-    { "key": "7", "value": "71XXXXX XXX74" },
-];
+// const accountData = [
+//     { "key": "1", "value": "34XXXXX XX25" },
+//     { "key": "2", "value": "52XXXXX XX74" },
+//     { "key": "3", "value": "85XXXXX XXX99" },
+//     { "key": "4", "value": "10XXXXX XX07" },
+//     { "key": "5", "value": "97XXXXX XX11" },
+//     { "key": "6", "value": "11XXXXX XXX24" },
+//     { "key": "7", "value": "71XXXXX XXX74" },
+// ];
 
 class FloatingButtonComponent extends React.Component {
     constructor(props) {
@@ -195,17 +194,18 @@ class FloatingButtonComponent extends React.Component {
             dropDownTopicValue, dropDownTopicState, dropDownTopicFlag, dropDownTopicMsg,
             dropDownAccountValue, dropDownAccountState, dropDownAccountFlag, dropDownAccountMsg } = this.state;
         return (
-            <SafeAreaView style={styles.container}>
-                <GHeaderComponent navigation={navigation} />
+            <GDashBoardContainer navigation={navigation} title={gblStrings.msrServiceRequest.needAssistent}>
                 <View style={styles.container}>
-                    <ActionButton buttonColor={COLORS.ORANGE} onPress={this.toggleModal}>
-                        <GIcon
-                            name="plus"
-                            type="material"
-                            size={40}
-                            color="black"
-                        />
-                    </ActionButton>
+                    <TouchableOpacity onPress={this.toggleModal}>
+                        <View style={styles.fabButton}>
+                            <GIcon
+                                name="assistant"
+                                type="material"
+                                size={22}
+                                color={COLORS.WHITE_COLOR}
+                            />
+                        </View>
+                    </TouchableOpacity>
                     <Modal
                         style={styles.modalStyle}
                         animationIn="zoomInRight"
@@ -364,7 +364,7 @@ class FloatingButtonComponent extends React.Component {
                     </Modal>
 
                 </View>
-            </SafeAreaView>
+            </GDashBoardContainer>
         );
     }
 }

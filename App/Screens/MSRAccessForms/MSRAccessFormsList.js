@@ -1,13 +1,13 @@
 import React from 'react';
-import { Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, Switch } from 'react-native';
+import { Text, View, FlatList, ActivityIndicator, TouchableOpacity, Image, Switch } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
-import { GHeaderComponent } from '../../CommonComponents';
+import { GDashBoardContainer } from '../../CommonComponents';
 import logoImage from '../../Images/FaceID.png';
 import * as COLORS from "../../Constants/ColorConstants";
 
-class AccessFormList extends React.Component {
+class MSRAccessFormList extends React.Component {
 
     switchSort = (value) => {
         const { sortByPopular } = this.props;
@@ -76,13 +76,11 @@ class AccessFormList extends React.Component {
         } = this.props;
 
         return (
-            <SafeAreaView style={styles.container}>
-                <GHeaderComponent navigation={navigation} />
+            <GDashBoardContainer navigation={navigation} title={gblStrings.msrAccessForms.forms}>
                 {/* {isMoreDataAvailable &&
                     <GLoadingSpinner />} */}
                 <View style={styles.container}>
                     <View style={styles.columnContainer}>
-                        <Text style={styles.boldText}>{gblStrings.msrAccessForms.forms}</Text>
                         <Text style={styles.regularText}>You will need free Adobe reader to view the documents</Text>
                         <View style={styles.rowContainer}>
                             <Text style={styles.blackText}>{gblStrings.msrAccessForms.sortBy}</Text>
@@ -122,12 +120,12 @@ class AccessFormList extends React.Component {
                         renderItem={this.renderItem}
                     />
                 </View>
-            </SafeAreaView>
+            </GDashBoardContainer>
         );
     }
 }
 
-AccessFormList.propTypes = {
+MSRAccessFormList.propTypes = {
     forms: PropTypes.arrayOf,
     isSortByPopular: PropTypes.bool,
     isMoreDataAvailable: PropTypes.bool,
@@ -137,7 +135,7 @@ AccessFormList.propTypes = {
     sortByPopular: PropTypes.instanceOf(Object)
 };
 
-AccessFormList.defaultProps = {
+MSRAccessFormList.defaultProps = {
     forms: [],
     isMoreDataAvailable: true,
     isSortByPopular: false,
@@ -147,4 +145,4 @@ AccessFormList.defaultProps = {
     sortByPopular: {}
 };
 
-export default AccessFormList;
+export default MSRAccessFormList;

@@ -1,3 +1,3 @@
-import FloatingButtonComponent from './MSRAccessFormContainer';
+import MSRAccessFormList from './MSRAccessFormContainer';
 
-export default FloatingButtonComponent;
+export default MSRAccessFormList;

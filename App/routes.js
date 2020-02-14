@@ -189,7 +189,7 @@ import RMDCalculatorComponent from './Screens/RMDCalculator';
 import RMDDashboardComponent from './Screens/RMDDashboard';
 
 // MSR
-import AccessFormList from './Screens/MSRAccessForms';
+import MSRAccessFormList from './Screens/MSRAccessForms';
 import FloatingButtonComponent from './Screens/MSRServiceRequest';
 
 import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
@@ -204,7 +204,7 @@ import SignInComponent from './Screens/SignIn';
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
     {
-        'Message Center': { screen: Screen1Component },
+        'Message Center': { screen: Screen2Component },
         Notification: { screen: Screen2Component },
     },
     {
@@ -245,7 +245,7 @@ const BottomTabNavigator = createBottomTabNavigator({
 
     },
     portfolio: {
-        screen: SpecialtyAccSubmit,
+        screen: MSRAccessFormList,
         navigationOptions: {
             tabBarIcon: (obj) => customTab({ object: obj, route: "portfolio" }),
             tabBarLabel: 'Portfolio',
@@ -256,13 +256,6 @@ const BottomTabNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: (obj) => customTab({ object: obj, route: "invest" }),
             tabBarLabel: 'Invest',
-        },
-    },
-    learn: {
-        screen: AccessFormList,
-        navigationOptions: {
-            tabBarIcon: (obj) => customTab({ object: obj, route: "learn" }),
-            tabBarLabel: 'Learn',
         },
     },
 },
@@ -282,9 +275,10 @@ const DrawerNavigator = createDrawerNavigator({
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
     drawerWidth: 250,
+    drawerPosition: 'right'
 });
 
-const AppNavigator = createStackNavigator({   
+const AppNavigator = createStackNavigator({
     login: {
         screen: LoginComponent,
         navigationOptions: {
@@ -313,6 +307,9 @@ const AppNavigator = createStackNavigator({
     // },
     draweriOS: {
         screen: DrawerComponent,
+        navigationOptions: {
+            header: null,
+        }
     },
     Common: {
         screen: CommonUIComponent,
@@ -1152,8 +1149,8 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    DashboardTransView:{
-        screen:DashboardTransViewComponent,
+    DashboardTransView: {
+        screen: DashboardTransViewComponent,
         navigationOptions: {
             header: null,
         }

@@ -1,29 +1,41 @@
+/* eslint-disable import/no-duplicates */
 import * as React from "react";
 import PropTypes from "prop-types";
-import { GIcon } from '../../CommonComponents/GIcon';
+// import { GIcon } from '../../CommonComponents/GIcon';
+import { Image } from 'react-native';
+
+import inactiveMyVCM from '../../Images/tabMyvcmSelect.png';
+import inactivePortfolio from '../../Images/tabSuitcase.png';
+import inactiveInvest from '../../Images/tabInvest.png';
+
+import activeMyVCM from '../../Images/tabMyvcmSelect.png';
+import activePortfolio from '../../Images/tabSuitcase.png';
+import activeInvest from '../../Images/tabInvest.png';
 
 const Tab = ({ tabObj, routeName }) => {
-    const { tintColor } = tabObj;
-    let iconName;
+    const { focused } = tabObj; // tintColor,
+    let imagePath;
     if (routeName === 'myVCM') {
-        iconName = 'home';
+        imagePath = focused ? activeMyVCM : inactiveMyVCM;
+        // iconName = 'home';
     } else if (routeName === 'portfolio') {
-        iconName = 'note';
+        imagePath = focused ? activePortfolio : inactivePortfolio;
+        // iconName = 'note';
     } else if (routeName === 'invest') {
-        iconName = 'insert-chart';
-    }
-    else if (routeName === 'learn') {
-        iconName = 'library-books';
+        imagePath = focused ? activeInvest : inactiveInvest;
+        //  iconName = 'insert-chart';
     } else {
-        iconName = 'more';
+        imagePath = focused ? activeMyVCM : inactiveMyVCM;
+        // iconName = 'more';
     }
     return (
-        <GIcon
-            name={iconName}
-            type="material"
-            size={20}
-            color={tintColor}
-        />
+        <Image source={imagePath} />
+        // <GIcon
+        //     name={iconName}
+        //     type="material"
+        //     size={20}
+        //     color={tintColor}
+        // />
     );
 
 };

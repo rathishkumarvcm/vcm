@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import Modal from 'react-native-modal';
 import { GIcon } from '../../CommonComponents';
-import onlineMethodImg from '../../Images/onlinemethod1.png';
 import styles from './styles';
 import { tabMoreActions } from '../../Shared/Actions';
 import { navigate } from '../../Navigation/navigationService';
 import { setModalVisible } from '../../Shared/Actions/TabMoreAction';
+import onlineMethodImg from '../../Images/onlinemethod1.png';
 
 class BaseViewComponent extends React.Component {
   closeModal = () => {
@@ -24,10 +24,17 @@ class BaseViewComponent extends React.Component {
     navigate('draweriOS');
   }
 
+
+  navigateToMemberSupport = () => {
+    const { dispatch } = this.props;
+    dispatch(setModalVisible(false));
+    navigate('draweriOS');
+  }
+
   render() {
     const { isMoreModalVisible, children } = this.props;
     return (
-      <SafeAreaView style={styles.scrollViewStyle}>
+      <View style={styles.scrollViewStyle}>
         {children}
         <Modal
           style={styles.rightModalStyle}
@@ -56,13 +63,13 @@ class BaseViewComponent extends React.Component {
               </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback
-              onPress={this.navigateToLogout}
+              onPress={this.navigateToMemberSupport}
             >
-              <Text style={styles.menuName}>Drawer</Text>
+              <Text style={styles.menuName}>MSR</Text>
             </TouchableWithoutFeedback>
           </SafeAreaView>
         </Modal>
-      </SafeAreaView>
+      </View>
     );
   }
 }
