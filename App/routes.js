@@ -194,7 +194,8 @@ import FloatingButtonComponent from './Screens/MSRServiceRequest';
 import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
 
 import ChangePINComponent from './Screens/ChangePIN';
-
+import RetrievePINInfoComponent from './Screens/RetrievePINInfo';
+import RetrievePINComponent from './Screens/RetrievePIN';
 
 
 // Notification Tabs
@@ -1150,6 +1151,18 @@ const AppNavigator = createStackNavigator({
     },
     changePIN: {
         screen: ChangePINComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    retrievePINInfo: {
+        screen: RetrievePINInfoComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    retrievePIN: {
+        screen: RetrievePINComponent,
         navigationOptions: {
             header: null,
         }

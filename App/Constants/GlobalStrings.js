@@ -1566,6 +1566,12 @@ export default {
         title:"Change PIN",
         enterCurrentPIN:"Enter Current Security PIN",
         enterSecurityPin:"Enter Security PIN",
+    },
+    retrievePINInfo:{
+        title:"Security PIN Information",
+        titlePIN:"Retrieve PIN",
+        createNewPIN:"Create New Security PIN",    
+        confirmSecurityPIN:"Confirm Security Pin"   
+    },    
 
-    }
 };
