@@ -20,8 +20,7 @@ const mapStateToProps = (state /* , props */) => ({
 
 const mapDispatchToProps = (dispatch) => ({
         addHoldingGroup: bindActionCreators(addHoldingGroup, dispatch),
-        removeHoldingGroup: bindActionCreators(removeHoldingGroup, dispatch)
-
+        removeHoldingGroup: bindActionCreators(removeHoldingGroup, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountSummaryComponent);

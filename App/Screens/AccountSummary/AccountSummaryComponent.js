@@ -13,7 +13,7 @@ class AccountSummaryComponent extends Component {
     this.state = {
       groups: [],
       showAddGroupModal: false,
-      selectedGroupID: null
+      selectedGroupID: null,
     };
   }
 
@@ -43,6 +43,7 @@ class AccountSummaryComponent extends Component {
           group={groups[Number(index)]}
           removeGroup={this.removeGroupFromList}
           addAccount={this.addAccountToGroup}
+          removeAccount={this.removeAccountFromGroup}
         />
       );
     });
@@ -117,6 +118,12 @@ class AccountSummaryComponent extends Component {
     this.setState({ showAddGroupModal: true, selectedGroupID});
   }
 
+  removeAccountFromGroup = (selectedAccountID, group) => {
+    const { addHoldingGroup } = this.props;
+    const newAccountList = group.accounts.filter((account) => account.accountID !== selectedAccountID);
+    const newHoldingGroup = {...group, accounts: newAccountList};
+    addHoldingGroup(newHoldingGroup);
+  }
 
   render() {
     const { navigation } = this.props;

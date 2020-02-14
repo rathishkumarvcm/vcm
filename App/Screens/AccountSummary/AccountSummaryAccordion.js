@@ -25,6 +25,13 @@ export default class AccountSummaryAccordion extends Component {
         this.groupMenu = null;
     }
 
+    static getDerivedStateFromProps (props, prevState) {
+        if(props.data !== prevState.data) {
+            return { data: props.data };
+        }
+        return null;
+    }
+
     setAccountMenuRef = index => input => {
         this.accountMenu[Number(index)] = input;
         // (input) => { this.accountMenu[index] = input; }
@@ -53,7 +60,7 @@ export default class AccountSummaryAccordion extends Component {
         this.accountMenu[Number(index)] = ref;
     };
 
-    hideMenu = (index) => () => {
+    hideMenu = (index) => {
         this.accountMenu[Number(index)].hide();
     };
 
@@ -83,6 +90,13 @@ export default class AccountSummaryAccordion extends Component {
         this.hideGroupMenu();
     }
 
+    removeAccountFromGroup = (index) => () => {
+        const { removeAccount, group } = this.props;
+        this.hideMenu(index);
+        const selectedAccountID = group.accounts[Number(index)].accountID;
+        removeAccount(selectedAccountID, group);
+    }
+
     renderAccountList = ({ item, index }) => {
 
         return (
@@ -102,7 +116,7 @@ export default class AccountSummaryAccordion extends Component {
                     </View>
                     <View style={accordianStyles.accountBalanceView}>
                         <Text style={accordianStyles.accountBalanceText}>{item.balance}</Text>
-                    </View>
+                    </View> 
                     <View style={accordianStyles.accountReturnsView}>
                         <Text style={accordianStyles.accountQtdText}>{item.qtd}</Text>
                         <Text style={accordianStyles.accountYtdText}>{item.ytd}</Text>
@@ -122,17 +136,17 @@ export default class AccountSummaryAccordion extends Component {
                         )}
                     >
                         <MenuDivider />
-                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.placeAnOrder}</MenuItem>
+                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.placeAnOrder}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.viewAccountActivity}</MenuItem>
+                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.viewAccountActivity}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.viewStatement}</MenuItem>
+                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.viewStatement}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.managePreferences}</MenuItem>
+                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.managePreferences}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.manageAccountServices}</MenuItem>
+                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.manageAccountServices}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.removeAccount}</MenuItem>
+                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.removeAccount}</MenuItem>
                         <MenuDivider />
                     </Menu>
                 </View>
@@ -228,6 +242,7 @@ export default class AccountSummaryAccordion extends Component {
                                 showsVerticalScrollIndicator={false}
                                 renderItem={this.renderAccountList}
                                 keyExtractor={this.keyExtractor}
+                                extraData={data}
                             />
                         </View>
                     )
@@ -241,7 +256,8 @@ AccountSummaryAccordion.propTypes = {
     data: PropTypes.instanceOf(Array),
     group: PropTypes.instanceOf(Object),
     addAccount: PropTypes.func,
-    removeGroup: PropTypes.func
+    removeGroup: PropTypes.func,
+    removeAccount: PropTypes.func,
 };
 
 AccountSummaryAccordion.defaultProps = {
@@ -249,4 +265,5 @@ AccountSummaryAccordion.defaultProps = {
     group: {},
     addAccount: () => {},
     removeGroup: () => {},
+    removeAccount: () => {},
 };
