@@ -97,6 +97,13 @@ class DashboardComponent extends Component {
 
     }
 
+
+    navigateToDashBoard = () => {
+        const { navigation } = this.props;
+        navigation.navigate('dashboardScreen');
+    }
+
+
     onClickOpenAnAccount = () => {
         const { navigation} = this.props;
         const { navigate } = navigation;  
@@ -158,7 +165,7 @@ class DashboardComponent extends Component {
 
                 <View style={styles.dashboardListContainer}>                                  
                         <View style={styles.dashboardItemContainer}>
-                            <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                            <Text style={styles.dashboardTileText} onPress={this.navigateToDashBoard}>
                                 Portfolio Analysis
                             </Text>                       
                         </View>
