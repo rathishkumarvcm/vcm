@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     borderWidth: 0.5,
     bottom: 0,
+    elevation:scaledHeight(3),
     height: '100%',
     marginHorizontal: scaledHeight(35),
     position: 'absolute',
