@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
+    containercenter: {
+        justifyContent: 'center'
+    },
     fullLine: {
         backgroundColor: '#7B8288',
         height: scaledHeight(1),

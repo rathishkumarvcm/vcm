@@ -9,50 +9,65 @@ class ProfilesAndPreferences extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isLoading:false,
-            showWelcomeText: true,
-            onlineId: "",
-            firstName: "",
-            lastName: ""
+            // isLoading:false,
+            // onlineId: "",
+            // firstName: "",
+            // lastName: ""
         };
     }
 
     componentDidMount() {
-        if (this.props && this.props.initialState) {
-            if (this.props.initialState.onlineId) {
-                this.setState({ onlineId: this.props.initialState.onlineId });
-            }
-            if (this.props.initialState.firstName) {
-                this.setState({ firstName: this.props.initialState.firstName });
-            }
-            if (this.props.initialState.lastName) {
-                this.setState({ lastName: this.props.initialState.lastName });
-            }
+        const { initialState } = this.props;
+        if (this.props && initialState) {
+            // if (initialState.onlineId) {
+            //     this.setState({ onlineId: initialState.onlineId });
+            // }
+            // if (initialState.firstName) {
+            //     this.setState({ firstName: initialState.firstName });
+            // }
+            // if (initialState.lastName) {
+            //     this.setState({ lastName: initialState.lastName });
+            // }
         }
     }
 
-    navigateBack = () => this.props.navigation.goBack();
+    navigateBack = () => {
+        const { navigation } = this.props;
+        navigation.goBack();
+    }
    
-    navigateProfile = () => this.props.navigation.navigate('profileSettings');
+    navigateProfile = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    }
 
-    navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings');
+    navigateDeliverySettings = () => {
+        const { navigation } = this.props;
+        navigation.navigate('deliverySettings');
+    }
 
-    navigateAccountMessaging = () => this.props.navigation.navigate('accountMessagingSettings');
+    navigateAccountMessaging = () => {
+        const { navigation } = this.props;
+        navigation.navigate('accountMessagingSettings');
+    }
 
-    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');
+    navigateSecurityPreference = () => {
+        const { navigation } = this.props;
+        navigation.navigate('securityPreference');
+    }
     
-    navigateMarketingPrivacySettings = () => this.props.navigation.navigate('marketingandPrivacySettings');
-    
-    removeWelcomeText = () => {
-        this.setState({showWelcomeText:false});
+    navigateMarketingPrivacySettings = () => {
+        const { navigation } = this.props;
+        navigation.navigate('marketingandPrivacySettings');
     }
 
     render(){
+        const { navigation } = this.props;
         return(
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.containercenter}>
 
                     {/* <View style={styles.welcomeView}>
                         <Text style={styles.welcomeText}>
