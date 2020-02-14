@@ -3,8 +3,9 @@ import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
 import styles from './styles';
-import {GButtonComponent,GInputComponent,GHeaderComponent} from '../../CommonComponents';
-import { CustomPageWizard } from '../../AppComponents';
+import {GButtonComponent,GInputComponent,GTitleBarComponent} from '../../CommonComponents';
+import globalString from '../../Constants/GlobalStrings';
+
 import AppUtils from '../../Utils/AppUtils';
 
 class OtpConfirmComponent extends Component {
@@ -12,7 +13,7 @@ class OtpConfirmComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            code:''
+            code:'',           
         };
     }
 
@@ -32,13 +33,11 @@ class OtpConfirmComponent extends Component {
         });
     }
 
-    setEmail = text => {
+    setConfirmOTP = text => {
         this.setState({
             code : text
         });
-    }
-
-    
+    }    
 
     navigateLogin = ()=> {
         const {navigation} = this.props;
@@ -55,112 +54,71 @@ class OtpConfirmComponent extends Component {
         navigation.navigate('modifySecurityQues');
     }
  
-    render(){
-        const {navigation} = this.props;
+    render(){      
         const {code} = this.state;
       
-        return (
-           
-           
-            <View style={styles.container}>
-             <GHeaderComponent 
-             navigation={navigation}
-             register
-             />
-        
-            <ScrollView style={styles.flexContainer}>
-            
+        return (                     
+            <View style={styles.container}>      
 
-                <CustomPageWizard 
-                    currentPage={2}
-                    lastPage
+                <GTitleBarComponent
+                    toolbarTiltle={globalString.loginComponent.signIn}
+                    backPress={this.goBack}
                 />
+                <View style={styles.layoutContainer}>          
 
-            <View style={styles.signInView}>
-                <Text style={styles.signIntext}>
-                    2 Confirm OTP
-                </Text>
-            </View>
+                    <View style={styles.cornerTriangle} />
 
-            <View style={styles.otpHeaderSection}>
-                <Text style={styles.otpAuthHeader}>
-                        Confirm OTP
-                </Text> 
-            </View>
+                        <ScrollView style={styles.scrollStyle} contentContainerStyle={styles.scrollStyle}>      
 
-            <View style={styles.optContainer}>
-                <Text style={styles.otpOutLine}>
-                    Enter OTP
-                </Text>
-            </View>
-                <GInputComponent 
-                    propInputStyle={styles.userIDTextBox}
-                    placeholder=""
-                    onChangeText={this.setEmail}
-                    // onBlur={this.validateEmail}
-                    value={code}
-                />
+                            <View style={styles.contentContainer}>
 
-                <TouchableOpacity style={styles.resendOtp}>
-                    <Text style={styles.resendOtpNewLine}>
-                        Resend OTP
-                    </Text>
-                </TouchableOpacity>
-                
-             
-                
-                <GButtonComponent 
-                    buttonStyle={styles.cancelButton}
-                    buttonText="Back"
-                    textStyle={styles.cancelButtonText}
-                    onPress={this.goBack}
-                />
-                <GButtonComponent 
-                    buttonStyle={styles.cancelButton}
-                    buttonText="Cancel"
-                    textStyle={styles.cancelButtonText}
-                    onPress={this.navigateLogin}
-                />
+                                <View style={styles.confirmPasswordContainer}>
 
-            <GButtonComponent 
-                    buttonStyle={styles.sendOTPButton}
-                    buttonText="Confirm"
-                    textStyle={styles.signInButtonText}
-                    onPress={this.verifyOTP}
-            />
+                                    <Text style={styles.confirmPasswordText}>
+                                        {globalString.signIn.confirmOTP}
+                                    </Text>                                  
+                                    
+                                    <Text style={styles.sentOTPText}>
+                                        We have sent OTP to your registered Mobile Number 95******89
+                                    </Text>    
 
-            <View style={styles.marginTwenty}>
-                 <View style={styles.usaaBorderLine} />  
-            </View>
-            
-            
-            
-            <View style={styles.newVictorySection}>
-                <Text style={styles.termsofuseText1}>
-                    Investments for USAA Members
-                </Text>
-                <Text style={styles.openInvestment}>
-                        For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account.Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account.
-                </Text> 
-            </View>
+                                    <Text style={styles.mandatoryText}>
+                                        {globalString.recoverPassword.mandatory}
+                                    </Text>                                                 
+                                   
+                                    <Text style={styles.otpOutLine}>
+                                        Enter OTP
+                                    </Text>                                   
 
-            <View style={styles.privacyAgreement}>
-                <Text style={styles.privacyText}>
-                    Privacy Policy
-                </Text>
+                                    <GInputComponent 
+                                        propInputStyle={styles.otpTextBox}
+                                        placeholder=""
+                                        onChangeText={this.setConfirmOTP}                                       
+                                        value={code}
+                                        keyboardType="number-pad"                                        
+                                    />        
 
-                <Text style={styles.privacyText}>
-                    User Agreement
-                </Text>
-            </View>
+                                    <View style={styles.buttonContainer}>
+                                        <GButtonComponent
+                                            buttonStyle={styles.confirmButtonStyle}
+                                            buttonText={globalString.common.resend}
+                                            textStyle={styles.confirmButtonTextStyle}
+                                            onPress={this.submitButtonAction}
+                                        /> 
+                                    </View>
+                                    
+                                </View>
+                            </View>
+                        </ScrollView>
+                </View>
 
-            <View style={styles.copyRightSection}>
-                <Text style={styles.copyRightText}>
-                    Copyright Victory Capital Management Inc. ©2020
-                </Text>
-            </View>
-
-            </ScrollView>
+                <View style={styles.bottomView}>
+                    <TouchableOpacity onPress={this.verifyOTP} style={styles.touchableStyle}> 
+                        <Text style={styles.submitButtonStyle} onPress={this.verifyOTP}>
+                        {globalString.common.verify}
+                        </Text>
+                    </TouchableOpacity>          
+                </View>     
             </View>
     
         );

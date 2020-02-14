@@ -196,6 +196,8 @@ import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
 import ChangePINComponent from './Screens/ChangePIN';
 import RetrievePINInfoComponent from './Screens/RetrievePINInfo';
 import RetrievePINComponent from './Screens/RetrievePIN';
+import SignInNotificationComponent from './Screens/SignInNotification';
+import SignInComponent from './Screens/SignIn';
 
 
 // Notification Tabs
@@ -1163,6 +1165,18 @@ const AppNavigator = createStackNavigator({
     },
     retrievePIN: {
         screen: RetrievePINComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    signInNotification: {
+        screen: SignInNotificationComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    signIn: {
+        screen: SignInComponent,
         navigationOptions: {
             header: null,
         }

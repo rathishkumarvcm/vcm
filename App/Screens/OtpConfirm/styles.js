@@ -1,9 +1,22 @@
 import { StyleSheet,Dimensions } from "react-native";
 import { scaledHeight} from '../../Utils/Resolution';
+import * as COLORS from "../../Constants/ColorConstants";
 
 const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+    bottomView: {    
+        alignItems: 'center',
+        backgroundColor: '#194C7D',
+        bottom: 0,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        position: 'absolute', 
+        width: '100%', 
+      },
+    buttonContainer:{
+        alignItems:'flex-end',       
+    },
     cancelButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
@@ -20,11 +33,39 @@ const styles = StyleSheet.create({
         color:'#544A54',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
+    },   
+    confirmButtonStyle:{
+        alignItems:'center',      
+        backgroundColor:COLORS.DARK_BLUE,    
+        justifyContent:'center',         
+        width:'35%',             
+     },
+    confirmButtonTextStyle:{
+        alignItems:'center',
+        alignSelf:'center',
+        color:'#FFFFFF',
+        fontSize:scaledHeight(16),    
+        fontWeight:'500',        
+    },
+    confirmPasswordContainer:{
+        marginTop:scaledHeight(10),
+        paddingLeft:'4%',
+        paddingRight:'4%',
+    },
+    confirmPasswordText:{
+        color:'#194C7D',
+        fontSize:scaledHeight(18), 
+        fontWeight:'bold'      
     },
     container:{
-        backgroundColor:'#F7FAFF',
-        flex:1,
-        width:'100%'
+        alignItems:'center',
+        alignSelf:'stretch',     
+        backgroundColor:'#F7F7F7',
+        flex:1
+    },
+    contentContainer:{
+        alignSelf:'stretch',
+        paddingHorizontal:'2%',
     },
     copyRightSection:{
         alignItems:'center',
@@ -35,6 +76,20 @@ const styles = StyleSheet.create({
     copyRightText:{
         color:'#FFFFFF'
     },
+    cornerTriangle:{
+        backgroundColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderRightWidth: 30,
+        borderStyle: 'solid',
+        borderTopColor: '#8BC105',
+        borderTopWidth: 30,
+        height: 0,
+        width: 0
+    },
+    errorMessage: {
+        color:"red",
+        fontSize: scaledHeight(14),       
+      },
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
@@ -63,6 +118,16 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         marginTop:scaledHeight(15)
     },
+    layoutContainer:{
+        alignSelf:'stretch',
+        backgroundColor: '#FFFFFF',       
+        flex:1, 
+        height: '100%',
+        left: '4%',
+        position: 'absolute',
+        right: '4%',          
+        top: scaledHeight(120)       
+    },
     lineBorder:{
         borderTopWidth:1,
         color:'#707070',
@@ -77,9 +142,13 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
+    mandatoryText:{
+        color:'#56565A',
+        fontSize:scaledHeight(12),        
+    },
     marginTwenty:{
         marginTop:20
-    },
+    }, 
     newVictory:{
         color:'#486D89',
         fontSize:scaledHeight(20),
@@ -103,7 +172,7 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    newVictorySection:{
+     newVictorySection:{
         backgroundColor:'#FFFFFF',
         height:scaledHeight(190),
         marginLeft:'4%',
@@ -112,13 +181,7 @@ const styles = StyleSheet.create({
         padding:scaledHeight(15),
         width:'92%'
     },
-    optContainer: {
-        height:scaledHeight(30),
-        marginBottom:'2%',
-        marginLeft:'4%',
-        marginRight:'4%'
-    },
-    otpAuthHeader:{
+     otpAuthHeader:{
         color:'#56565A',
         fontSize:scaledHeight(32),
         opacity : 100
@@ -132,14 +195,25 @@ const styles = StyleSheet.create({
     },
     otpOutLine:{
         color:'#333333DE',
-        fontSize:scaledHeight(16),
-        opacity:100
+        fontSize:scaledHeight(13),
+        marginBottom:scaledHeight(10),  
+        marginTop:scaledHeight(20)     
     },
-     passwordView:{
+    otpTextBox:{
+        marginBottom:scaledHeight(18),
+        width:'100%'
+    },
+    otpTextBoxError:{
+        borderColor:'red',
+        marginBottom:scaledHeight(18),
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
+    passwordView:{
         paddingLeft:'4%',
         paddingRight:'4%'
     },
-     privacyAgreement:{
+    privacyAgreement:{
         alignItems:'center',
         backgroundColor:'white',
         flexDirection:'row',
@@ -148,7 +222,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(15),
         width:'100%'
     },
-    privacyText:{
+     privacyText:{
         color:'#61285F',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
@@ -165,7 +239,7 @@ const styles = StyleSheet.create({
        justifyContent:'center',
        width:width/3.3
     },
-    registernowButton1:{
+registernowButton1:{
         alignSelf:'center',
        backgroundColor:'#FFFFFF',
        borderColor:'#56565A',
@@ -183,12 +257,15 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    resendOtpNewLine:{
+     resendOtpNewLine:{
         color:'#2C8DBF',
         fontSize:scaledHeight(16),
         textDecorationLine:'underline'
     },
-sendOTPButton:{
+    scrollStyle:{ 
+        alignSelf:'stretch',      
+    }, 
+    sendOTPButton:{
         alignItems:'center',
         backgroundColor:'#56565A',
         borderColor:'#56565A',
@@ -200,20 +277,26 @@ sendOTPButton:{
         marginTop:scaledHeight(12),
         width:'80%'
      },
+    sentOTPText:{
+        color:'#49494A',
+        fontSize:scaledHeight(16),     
+        marginBottom:scaledHeight(30),
+        marginTop:scaledHeight(30),        
+    },
     signInButtonText:{
         color:'#FFFFFF',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    signInView:{
-        // marginTop:scaledHeight(),
-        paddingLeft:'4%',
-        paddingRight:'4%',
-    },
     signIntext:{
         color:'#535353',
         fontSize:scaledHeight(20),
         opacity : 100
+    },
+    submitButtonStyle:{
+        color:'#FFFFFF',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
     },
     termsofuse:{
         flexDirection:'row',
@@ -230,7 +313,11 @@ sendOTPButton:{
         color:'#486D89',
         fontSize : scaledHeight(18),
         marginBottom:scaledHeight(5)
-    },
+    },   
+    touchableStyle: {
+        alignItems: 'center',        
+        width: '100%', 
+      },
     usaaBorderLine:{
         borderBottomColor:'#535353',
         borderBottomWidth:1
@@ -244,24 +331,7 @@ sendOTPButton:{
         fontSize:scaledHeight(16),
         height:scaledHeight(50),
         lineHeight:scaledHeight(50)
-    },
-    userIDText:{
-        color:'#000000',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
-        marginBottom:scaledHeight(8)
-    },
-    userIDTextBox:{
-        marginBottom:scaledHeight(18),
-        marginLeft:'4%',
-        marginRight:'4%'
-    },
-    userIDTextBoxError:{
-        borderColor:'red',
-        marginBottom:scaledHeight(18),
-        marginLeft:'4%',
-        marginRight:'4%'
-    },
+    }
 });
 
 export default styles;

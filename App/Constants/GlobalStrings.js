@@ -62,7 +62,10 @@ export default {
         deleteAlertMsg: "Are you sure to delete?",
         vcmMemberService: "VCM Memeber Services",
         apply: "Apply",
-        calender: "MM/DD/YYYY"
+        calender: "MM/DD/YYYY",
+        send:"Send",
+        verify:"Verify",
+        resend:"Resend"
     },
     login: {
         imageRequest: "imageRequest",
@@ -1573,5 +1576,11 @@ export default {
         createNewPIN:"Create New Security PIN",    
         confirmSecurityPIN:"Confirm Security Pin"   
     },    
+    signIn:{       
+        signInWithPIN:"Sign in with PIN",
+        signInWithOnline:"Sign in with Online ID",
+        confirmOTP:"Confirm OTP",
+        sendOTP:"Send OTP"       
+    }
 
 };
