@@ -5,8 +5,14 @@ const {width} = Dimensions.get('window');
 
 
 const styles = StyleSheet.create({
+    backgroundImage:{
+        flex: 1,
+        height: scaledHeight(280),
+        opacity:0.2,
+        width: '100%'   
+    },
     container:{
-        backgroundColor:'#F7FAFF',
+        backgroundColor:'#063461',
         flex:1,
         width:'100%'
     },
@@ -19,6 +25,18 @@ const styles = StyleSheet.create({
     copyRightText:{
         color:'#FFFFFF'
     },
+    cornerTriangle:{      
+        alignSelf:'flex-end',
+        backgroundColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderRightWidth: 30,
+        borderStyle: 'solid',
+        borderTopColor: '#8BC105',
+        borderTopWidth: 30,
+        height: 0,
+        transform: [{ rotate: '90deg' }],
+        width: 0      
+    },
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
@@ -29,7 +47,7 @@ const styles = StyleSheet.create({
         height:scaledHeight(20)
     },
     flexContainer:{
-         flex: 0.85 
+         flex: 0.85,          
     },
     forgotLineText:{
         flexDirection:'row',
@@ -39,8 +57,8 @@ const styles = StyleSheet.create({
         paddingRight:'4%'
     },
     forgotLineTextColor:{
-        color:'#2C8DBF',
-        fontSize : scaledHeight(18),
+        color:'#FFFFFF',
+        fontSize : scaledHeight(16),
         fontWeight:'bold'
     },
     inActivityView : {
@@ -77,12 +95,16 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
+    logoStyle: {            
+       alignSelf:'center',
+       marginTop:scaledHeight(150),             
+      },
     marginForOther:{ 
         marginLeft: '4%', 
         marginRight: '4%', 
         width: '92%' 
     },
-    newVictory:{
+      newVictory:{
         color:'#56565A',
         fontSize:scaledHeight(30),
         height:scaledHeight(30),
@@ -98,21 +120,15 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         marginTop:scaledHeight(25),
         width:'60%'
-
     },
     newVictoryButtonText:{
         color:'#56565A',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    newVictorySection:{
-        backgroundColor:'#FFFFFF',
-        height:scaledHeight(220),
-        marginLeft:'4%',
-        marginRight:'4%',
-        marginTop:scaledHeight(29),
-        padding:scaledHeight(15),
-        width:'92%'
+    newVictorySection:{ 
+        alignSelf:'center',
+        marginVertical:scaledHeight(20) 
     },
     onlineIDSuccess:
     {
@@ -131,9 +147,9 @@ const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(20),
         marginTop:scaledHeight(10)
-    },
+    },    
     passwordView:{
-        marginTop:scaledHeight(28),
+        marginTop:scaledHeight(15),
         paddingLeft:'4%',
         paddingRight:'4%'
     },
@@ -153,7 +169,7 @@ const styles = StyleSheet.create({
         paddingLeft:'4%',
         width:'50%'
     },
-     registernowButton:{
+    registernowButton:{
        alignItems:'center',
        backgroundColor:'#FFFFFF',
        borderColor:'#56565A',
@@ -175,48 +191,77 @@ const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(10)
     },
-    signInButton:{
-        alignItems:'center',
+    retrieveContainer:{
+        flex:1,
+        flexDirection:'row'
+    },
+    retrieveTextStyle:{
+        color:'#FFFFFF',
+        fontSize:scaledHeight(14),
+        textAlign:'center',
+        width:'50%',
+    },
+     signInButton:{       
+        alignSelf:'center',
         backgroundColor:'#56565A',
         borderColor:'#56565A',
         borderWidth:1,
         height:scaledHeight(50),
-        justifyContent:'center',
-        marginLeft:'14%',
-        marginRight:'14%',
-        marginTop:scaledHeight(42),
-        width:'72%'
+        justifyContent:'center',        
+        marginTop:scaledHeight(15),       
      },
     signInButtonText:{
         color:'#FFFFFF',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
+    signInContainer:{
+      backgroundColor:'#F7F7F7',
+      marginHorizontal:scaledHeight(20),
+      marginVertical:'6%',     
+    },
+    signInInnerContainner:{
+        paddingHorizontal:'2%'
+    },
+    signInLogoStyle: {      
+        alignContent:'center',
+        alignItems:'center',
+        alignSelf:'center',                  
+       },
     signInUser:{
-        marginTop:scaledHeight(34),
+        marginTop:scaledHeight(15),
         paddingLeft:'4%',
         paddingRight:'4%',
     },
     signInView:{
-        marginTop:scaledHeight(18),
-        paddingLeft:'4%',
-        paddingRight:'4%',
+        alignContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
+        flexDirection:'column',
+        justifyContent:'center',
+        marginTop:scaledHeight(5),        
     },
     signIntext:{
-        color:'#56565A',
-        fontSize:scaledHeight(30),
-        fontWeight : '300'
+        color:'#194C7D',
+        fontSize:scaledHeight(16),
+        marginTop:scaledHeight(10),        
+    },
+    signUpText:{
+        color:'#004A98',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
     },
     termsofuse:{
         flexDirection:'row',
         flexWrap:'wrap',
-        marginTop:scaledHeight(25),
-        paddingLeft:'4%',
-        paddingRight:'4%'
+        marginHorizontal:'6%',
+        marginTop:scaledHeight(25),       
     },
     termsofuseText:{
-        color:'#56565A',
-        fontSize : scaledHeight(18)
+        color:'#FFFFFF',
+        fontSize : scaledHeight(16),    
+        justifyContent:'center',
+        textAlign:'center'   
     },
     usaaMemberSection:{
         flexDirection:'row',
@@ -230,8 +275,7 @@ const styles = StyleSheet.create({
     },
     userIDText:{
         color:'#333333DE',
-        fontSize:scaledHeight(18),
-        fontWeight : '500',
+        fontSize:scaledHeight(13),       
         marginBottom:scaledHeight(8)
     },
     userIDTextBox:{

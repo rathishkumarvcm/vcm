@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
     cornerTriangle:{
             backgroundColor: 'transparent',
             borderRightColor: 'transparent',
-            borderRightWidth: 20,
+            borderRightWidth: 30,
             borderStyle: 'solid',
             borderTopColor: '#8BC105',
-            borderTopWidth: 20,
+            borderTopWidth: 30,
             height: 0,
             width: 0
         },

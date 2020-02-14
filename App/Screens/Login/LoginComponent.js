@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, Linking, TouchableOpacity, StatusBar } from 'react-native';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import Amplify, { Auth } from 'aws-amplify';
 import styles from './styles';
-import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlert, showAlertWithCancelButton } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GBiometricAuthentication, GLoadingSpinner, showAlert, showAlertWithCancelButton } from '../../CommonComponents';
 import * as reGex from '../../Constants/RegexConstants';
+import globalStrings from '../../Constants/GlobalStrings';
 import faceIdImg from '../../Images/FaceID.png';
 import touchImg from '../../Images/TouchID.png';
+// import bgImg from '../../Images/splash.png';
+import logo from '../../Images/logoVCM.png';
+import signin from '../../Images/signin.png';
+
 // const awsmobile = {
 //     "aws_project_region": "us-east-2",
 //     "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
@@ -46,17 +51,14 @@ class LoginComponent extends Component {
             email: '',
             registeredSuccess: false,
             password: '',
-            inActivityAccount: false
+            inActivityAccount: false,
+            showOtherView:false,
         };
     }
 
-
-
-
-
     componentDidMount() {
 
-       // const {initialState} = this.props;
+        // const {initialState} = this.props;
 
         RNSecureKeyStore.get("enableBioMetric")
             .then(() => {
@@ -92,12 +94,12 @@ class LoginComponent extends Component {
                 });
             });
 
-       
+
         TouchID.isSupported()
             .then(biometryType => {
                 if (biometryType === 'TouchID') {
                     this.setState({
-                      
+
                         faceIdEnrolled: false
                     });
                     //  Touch ID is supported on iOS
@@ -105,20 +107,20 @@ class LoginComponent extends Component {
                 else if (biometryType === 'FaceID') {
                     this.setState({
                         faceIdEnrolled: true,
-                    
+
                     });
                     //  Face ID is supported on iOS
                 }
                 else if (biometryType === true) {
                     this.setState({
-                     
+
                         faceIdEnrolled: false
                     });
                     //  Touch ID is supported on Android
                 }
             }).catch(() => {
                 this.setState({
-                    
+
                     faceIdEnrolled: false
                 });
             });
@@ -131,11 +133,11 @@ class LoginComponent extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        const {navigation,loginState} = nextProps;
-        const {registeredSuccess,email,password} = prevState;
+        const { navigation, loginState } = nextProps;
+        const { registeredSuccess, email, password } = prevState;
         const emailVerify = navigation.getParam('emailVerified');
         if (emailVerify !== undefined && !registeredSuccess) {
-            return({
+            return ({
                 registeredSuccess: true
             });
         }
@@ -143,7 +145,7 @@ class LoginComponent extends Component {
         //  Special MFA Requirements
         const onlineIdVerify = navigation.getParam('onlineIdCreated');
         if (onlineIdVerify !== undefined) {
-            return({
+            return ({
                 registeredSuccess: true
             });
         }
@@ -177,8 +179,8 @@ class LoginComponent extends Component {
     }
 
     onAuthenticate = result => {
-        const {navigation} = this.props;
-        const {registeredBioMetricUsername,registeredBioMeticPassword} = this.state;
+        const { navigation } = this.props;
+        const { registeredBioMetricUsername, registeredBioMeticPassword } = this.state;
 
         if (result) {
             showAlert("Authentication Successfull");
@@ -193,7 +195,7 @@ class LoginComponent extends Component {
                 email,
                 phoneNumber
             }).then(data => {
-                
+
                 // console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
                 RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then(() => {
@@ -209,7 +211,7 @@ class LoginComponent extends Component {
                     });
 
 
-                    showAlert("Signed In Successfully.");
+                showAlert("Signed In Successfully.");
                 RNSecureKeyStore.set("EmailAddress", username, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
                     .then(() => {
                     }, () => {
@@ -221,7 +223,7 @@ class LoginComponent extends Component {
                 enableBiometric: false
             });
         }
-        else {     
+        else {
             showAlert("Aunthentication Failed");
             this.setState({
                 enableBiometric: false
@@ -231,7 +233,7 @@ class LoginComponent extends Component {
     }
 
     validateEmail = () => {
-        const {email} = this.state;
+        const { email } = this.state;
         const validate = reGex.emailRegex.test(email);
         this.setState({
             validationEmail: validate
@@ -245,7 +247,7 @@ class LoginComponent extends Component {
     }
 
     validatePassword = () => {
-        const {password} = this.state;
+        const { password } = this.state;
         const validate = reGex.passwordRegex.test(password);
         this.setState({
             validationPassword: validate
@@ -259,7 +261,7 @@ class LoginComponent extends Component {
     }
 
     enableBioMetric = () => {
-        const {email, password} = this.state;
+        const { email, password } = this.state;
         RNSecureKeyStore.set("enableBioMetric", "true", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then(() => {
                 showAlert("Registered Bio Metric Successfully.");
@@ -279,10 +281,10 @@ class LoginComponent extends Component {
     }
 
     signIn = () => {
-        const {setJWTToken,setEnvironment,navigation,updateEmail} = this.props;
-        const {email, registeredBioMetric} = this.state;
+        const { setJWTToken, setEnvironment, navigation, updateEmail } = this.props;
+        const { email, registeredBioMetric } = this.state;
         const username = email;
-        const {password} = this.state;;
+        const { password } = this.state;;
         const phoneNumber = "+918754499334";
         Auth.signIn({
             username,
@@ -309,7 +311,7 @@ class LoginComponent extends Component {
             });
 
             const currentSessionTime = new Date();
-            
+
 
             RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
                 .then(() => {
@@ -333,7 +335,7 @@ class LoginComponent extends Component {
                 .then(() => {
                 }, () => {
                 });
-                updateEmail(username);
+            updateEmail(username);
 
             /* If it is a first time user use OTP auth */
             RNSecureKeyStore.get("authProcessCompleted")
@@ -354,8 +356,8 @@ class LoginComponent extends Component {
 
 
     callSignIn = () => {
-        const {signInAction} = this.props;
-        const {email,password} = this.state;
+        const { signInAction } = this.props;
+        const { email, password } = this.state;
         const payload = {
             "companyNumber": 591,
             "fundNumber": 30,
@@ -368,22 +370,22 @@ class LoginComponent extends Component {
 
 
     navigateEmail = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate('registerEmail');
     }
 
     navigateDashboard = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate('dashboard');
     }
 
     navigateToDashBoard = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate('dashboardScreen');
     }
 
     navigateToGuestUserDashBoard = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate('guestUserDashboard');
     }
 
@@ -404,235 +406,203 @@ class LoginComponent extends Component {
 
     // Recover password navigation
     navigationResetPassword = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate('passwordRecovery');
     }
 
     navigationRetrieveOnlineID = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate("retrieveOnlineId");
     }
 
-
-
     render() {
-        const {inActivityAccount,enableBiometric,loginState,registeredSuccess,email,validationEmail,validationPassword,validatePassword,password,faceIdEnrolled} = this.state;
-
+        const { inActivityAccount, enableBiometric, loginState, registeredSuccess, 
+            email, validationEmail, validationPassword, validatePassword, password, faceIdEnrolled,showOtherView } = this.state;
 
         return (
-
             <>
                 {enableBiometric &&
                     <GBiometricAuthentication onAuthenticate={this.onAuthenticate} enableBiometric={enableBiometric} />
                 }
                 <View style={styles.container}>
-
                     {
                         loginState && loginState.isloading && <GLoadingSpinner />
                     }
-
-                    <GHeaderComponent registerShow
-                        onPress={this.navigateEmail}
-
-                    />
-
-
+                    <StatusBar backgroundColor="transparent" barStyle="light-content" translucent />
                     <ScrollView style={styles.flexContainer}>
-                        {registeredSuccess ? (
-                            <View style={styles.onlineIDSuccess}>
-                                <Text> Your Online ID successfully created.</Text>
+
+                        {/* <ImageBackground style={styles.backgroundImage} source={bgImg}>
+                           
+                        </ImageBackground> */}
+                        <Image style={styles.logoStyle} source={logo} />
+
+                        <View style={styles.signInContainer}>
+
+                            <View style={styles.cornerTriangle} />    
+                           
+                           <View style={styles.signInInnerContainner}>
+                            {registeredSuccess ? (
+                                <View style={styles.onlineIDSuccess}>
+                                    <Text> Your Online ID successfully created.</Text>
+                                </View>
+                            )
+                                : null
+                            }
+
+                            <View style={styles.signInView}>
+                                <Image style={styles.signInLogoStyle} source={signin} />
+                                <Text style={styles.signIntext}>
+                                    Sign In
+                                </Text>
                             </View>
-                          )
-                            :
-                            null
-                        }
 
-                        <View style={styles.signInView}>
-                            <Text style={styles.signIntext}>
-                                Sign In
-                            </Text>
+                            {inActivityAccount ? (
+                                <View style={styles.inActivityView}>
+                                    <Text style={styles.inActivitytext}>
+                                        Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000
+                                    </Text>
+                                </View>
+                            )
+                            : null}
+
+                            <View style={styles.signInUser}>
+                                <Text style={styles.userIDText}>
+                                    {globalStrings.recoverPassword.lable_onlineId}
+                                </Text>
+                            </View>
+                            <GInputComponent
+                                propInputStyle={styles.userIDTextBox}
+                                placeholder={globalStrings.loginComponent.enterOnlineId}
+                                onChangeText={this.setEmail}
+                                // onBlur={this.validateEmail}
+                                value={email}
+                                // validateError={this.state.validateEmail}
+                                errorFlag={!validationEmail}
+                                errorText="Enter a valid email."
+                                maxLength={30}
+                                loginOnlineId
+                            />
+                            <View style={styles.passwordView}>
+                                <Text style={styles.userIDText}>
+                                    {globalStrings.userManagement.password}
+                                </Text>
+                            </View>
+                            <GInputComponent
+                                propInputStyle={!validationPassword ? styles.userIDTextBoxError : styles.userIDTextBox}
+                                placeholder={globalStrings.loginComponent.enterPassword}
+                                onChangeText={this.setPassword}
+                                // onBlur={this.validatePassword}
+                                validateError={validatePassword}
+                                value={password}
+                                secureTextEntry
+                                errorFlag={!validationPassword}
+                                errorText={globalStrings.loginComponent.validPassword}
+                                maxLength={30}
+                                loginPassword
+                            />
+                            <GButtonComponent
+                                buttonStyle={styles.signInButton}
+                                buttonText={globalStrings.loginComponent.signIn}
+                                textStyle={styles.signInButtonText}
+                                onPress={this.navigateDashboard}
+                            />
+                            <View style={styles.newVictorySection}>       
+                                <Text style={styles.signUpText} onPress={this.navigateEmail}>
+                                    {globalStrings.loginComponent.signUp}
+                                </Text>            
+                            </View>
+                           </View>
+
                         </View>
 
-                        {inActivityAccount ? (
-<View style={styles.inActivityView}>
-                            <Text style={styles.inActivitytext}>
-                                Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000
+                        <View style={styles.retrieveContainer}>
+                            <Text style={styles.retrieveTextStyle} onPress={this.navigationRetrieveOnlineID}>
+                                {globalStrings.loginComponent.retrieveOnlineId}
                             </Text>
-</View>
-)
-                            :
-                            null}
-
-
-                        <View style={styles.signInUser}>
-                            <Text style={styles.userIDText}>
-                                Online ID
+                            <Text style={styles.retrieveTextStyle} onPress={this.navigationResetPassword}>
+                                {globalStrings.loginComponent.retrievePassword}
                             </Text>
-                        </View>
-                        <GInputComponent
-                            propInputStyle={styles.userIDTextBox}
-                            // placeholder={"E-mail"}
-                            onChangeText={this.setEmail}
-                            // onBlur={this.validateEmail}
-                            value={email}
-                            // validateError={this.state.validateEmail}
-                            errorFlag={!validationEmail}
-                            errorText="Enter a valid email."
-                            maxLength={30}
-                        />
-
-                        <View style={styles.passwordView}>
-                            <Text style={styles.userIDText}>
-                                Password
-                            </Text>
-                        </View>
-
-                        <GInputComponent
-                            propInputStyle={!validationPassword ? styles.userIDTextBoxError : styles.userIDTextBox}
-                            // placeholder={"Password"}
-                            onChangeText={this.setPassword}
-                            // onBlur={this.validatePassword}
-                            validateError={validatePassword}
-                            value={password}
-                            secureTextEntry
-                            errorFlag={!validationPassword}
-                            errorText="Enter a valid password."
-                            maxLength={30}
-                        />
-
-
-                        <View style={styles.forgotLineText}>
-                            <Text style={styles.termsofuseText}>
-                                {"I forgot my "}
-                            </Text>
-                            <Text style={styles.forgotLineTextColor} onPress={this.navigationRetrieveOnlineID}>
-                                Online ID
-                            </Text>
-                            <Text style={styles.termsofuseText}>
-                                {" or "}
-                            </Text>
-                            <Text style={styles.forgotLineTextColor} onPress={this.navigationResetPassword}>
-                                Password.
-                            </Text>
-                        </View>
-
+                        </View>                               
                         <View style={styles.termsofuse}>
                             <Text style={styles.termsofuseText}>
-                                {"By clicking “Sign In” I agree to the Victory Capital "}
-
+                                {globalStrings.loginComponent.byClicking}
                                 <Text style={styles.forgotLineTextColor}>
-                                    Terms of Use.
+                                    {globalStrings.loginComponent.termsOfUse}
                                 </Text>
                             </Text>
                         </View>
 
-                        <GButtonComponent
-                            buttonStyle={styles.signInButton}
-                            buttonText="Sign In"
-                            textStyle={styles.signInButtonText}
-                            onPress={this.navigateDashboard}
-                        />
-                        <View>
+
                             {
-                                  faceIdEnrolled ? (
-                                        <TouchableOpacity>
-                                            <Image
-                                                resizeMode="contain"
-                                                source={faceIdImg}
-                                                style={styles.faceIDlogo}
-                                                // onPress={this.enableBiometricMethod}
-                                            />
+                               (showOtherView)?(
+                                <View>    
+                                    <View>
+                                        {
+                                            faceIdEnrolled ? (
+                                                <TouchableOpacity>
+                                                    <Image
+                                                        resizeMode="contain"
+                                                        source={faceIdImg}
+                                                        style={styles.faceIDlogo}
+                                                        // onPress={this.enableBiometricMethod}
+                                                    />
 
-                                            <TouchableOpacity style={styles.faceIDtextStyle}>
-                                                <Text>
-                                                    Sign In with Face ID
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </TouchableOpacity>
-                                      )
-                                        : (
-                                        <TouchableOpacity>
-                                            <Image
-                                                resizeMode="contain"
-                                                source={touchImg}
-                                                style={styles.faceIDlogo}
-                                                // onPress={this.enableBiometricMethod}
-                                            />
+                                                    <TouchableOpacity style={styles.faceIDtextStyle}>
+                                                        <Text>
+                                                            Sign In with Face ID
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                </TouchableOpacity>
+                                            )
+                                            : (
+                                                <TouchableOpacity>
+                                                    <Image
+                                                        resizeMode="contain"
+                                                        source={touchImg}
+                                                        style={styles.faceIDlogo}
+                                                    // onPress={this.enableBiometricMethod}
+                                                    />
 
-                                            <TouchableOpacity style={styles.faceIDtextStyle}>
-                                                <Text>
-                                                    Sign In with Touch ID
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </TouchableOpacity>
-                                      )}
-                        </View>
-
-                        <GButtonComponent
-                            buttonStyle={styles.signInButton}
-                            buttonText="Cognito Sign In"
-                            textStyle={styles.signInButtonText}
-                            onPress={this.signIn}
-                        // onPress={this.navigateDashboard}
-                        />
-
-
-                        <View style={styles.newVictorySection}>
-                            <Text style={styles.newVictory}>
-                               New to Victory Capital?
-                            </Text>
-
-                            <Text style={styles.openInvestment}>
-                                It’s easy to open your investment
-                            </Text>
-
-                            <GButtonComponent
-                                buttonStyle={styles.newVictoryButton}
-                                buttonText="Sign Up"
-                                textStyle={styles.newVictoryButtonText}
-                                onPress={this.navigateEmail}
-                            />
-
-                            {/* }  <View style={styles.lineBorder} />
-
-                <View style={styles.usaaMemberSection}>
-                    <Text style={styles.newVictory}>
-                        {"For USAA Members"}
-                    </Text>
-                    <Image />
-                </View>
-
-                <Text style={styles.openInvestment}>
-                    {"USAA Members has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account."}
-        </Text> */}
-
-                        </View>
-
-                        <View style={styles.marginForOther}>
-                            <GButtonComponent
-                                buttonStyle={styles.newVictoryButton}
-                                buttonText="Other Settings"
-                                textStyle={styles.newVictoryButtonText}
-                                onPress={this.navigateCommonUI}
-                            />
-                            <GButtonComponent
-                                buttonStyle={styles.newVictoryButton}
-                                buttonText="Native Menu"
-                                textStyle={styles.newVictoryButtonText}
-                                // Menu
-                                onPress={this.navigateToDashBoard}
-                            />
-
-                            <GButtonComponent
-                                buttonStyle={styles.newVictoryButton}
-                                buttonText="GuestUser DashBoard"
-                                textStyle={styles.newVictoryButtonText}
-                                // Menu
-                                onPress={this.navigateToGuestUserDashBoard}
-                            />
-                        </View>
-
-                        <GFooterSettingsComponent />
+                                                    <TouchableOpacity style={styles.faceIDtextStyle}>
+                                                        <Text>
+                                                            Sign In with Touch ID
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                </TouchableOpacity>
+                                            )}
+                                    </View>
+                                    <GButtonComponent
+                                        buttonStyle={styles.signInButton}
+                                        buttonText="Cognito Sign In"
+                                        textStyle={styles.signInButtonText}
+                                        onPress={this.signIn}
+                                    // onPress={this.navigateDashboard}
+                                    />                                            
+                                    <View style={styles.marginForOther}>
+                                        <GButtonComponent
+                                            buttonStyle={styles.newVictoryButton}
+                                            buttonText="Other Settings"
+                                            textStyle={styles.newVictoryButtonText}
+                                            onPress={this.navigateCommonUI}
+                                        />
+                                        <GButtonComponent
+                                            buttonStyle={styles.newVictoryButton}
+                                            buttonText="Native Menu"
+                                            textStyle={styles.newVictoryButtonText}
+                                            // Menu
+                                            onPress={this.navigateToDashBoard}
+                                        />
+                                        <GButtonComponent
+                                            buttonStyle={styles.newVictoryButton}
+                                            buttonText="GuestUser DashBoard"
+                                            textStyle={styles.newVictoryButtonText}
+                                            // Menu
+                                            onPress={this.navigateToGuestUserDashBoard}
+                                        />
+                                    </View>        
+                                </View>
+                                ):null
+                            }              
 
                     </ScrollView>
                 </View>
@@ -646,19 +616,19 @@ LoginComponent.propTypes = {
     loginState: PropTypes.instanceOf(Object),
     // initialState: PropTypes.instanceOf(Object),
     signInAction: PropTypes.func,
-    setEnvironment : PropTypes.func,
-    updateEmail : PropTypes.func,
-    setJWTToken : PropTypes.func
+    setEnvironment: PropTypes.func,
+    updateEmail: PropTypes.func,
+    setJWTToken: PropTypes.func
 };
 
 LoginComponent.defaultProps = {
-    navigation : {},
-    loginState : {},
+    navigation: {},
+    loginState: {},
     // initialState : {},
-    signInAction : () => {},
-    setEnvironment : () => {},
-    updateEmail : () => {},
-    setJWTToken : () => {}
+    signInAction: () => { },
+    setEnvironment: () => { },
+    updateEmail: () => { },
+    setJWTToken: () => { }
 };
 
 export default LoginComponent;
