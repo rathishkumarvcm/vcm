@@ -22,7 +22,7 @@ const {dateTextName,errorFlag,date,mode,placeholder,format,minDate,maxDate,iconC
     const styles = GDateComponentStyle(props);
     const customStyles = getCustomStyles(styles,props);
 return(
-    <View>
+    <View style={styles.container}>
        {
            (dateTextName && dateTextName!=="") && (
            <View style={styles.dateTextLayout}>
