@@ -28,7 +28,7 @@ import GSingletonClass from './GSingletonClass';
 import {GBankAccValidateComponent} from './GBankAccValidateComponent';
 import {GAddressValidateComponent} from './GAddressValidateComponent';
 import GTitleBarComponent from './GTitleBarComponent';
-import GDashBoardContainer from './GDashBoardContainer'
+import GDashBoardContainer from './GDashBoardContainer';
 
 import {
     SetKeyValueToStore,

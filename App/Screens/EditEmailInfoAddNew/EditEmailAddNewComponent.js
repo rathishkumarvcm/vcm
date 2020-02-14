@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import { getCustomStyle } from '../../Utils/Resolution';
 
 class editEmailAddNewComponent extends Component {
     constructor(props) {
@@ -127,7 +128,7 @@ class editEmailAddNewComponent extends Component {
                         <Text style={styles.termsofuseText1}>
                             {globalString.editEmailInformations.editEmailTerms}
                         </Text>
-                        <Text style={[styles.openInvestment, lineHeight = 30]}>
+                        <Text style={getCustomStyle(styles.openInvestment, {lineHeight: 30})}>
                             {globalString.editEmailInformations.editEmailInvestment}
                         </Text>
                     </View>

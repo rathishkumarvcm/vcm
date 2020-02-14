@@ -245,8 +245,8 @@ const styles = StyleSheet.create({
         marginLeft: '4%',
         marginRight: '4%',
         marginTop: scaledHeight(20),
-        width: '92%',
-        paddingBottom: '2%'
+        paddingBottom: '2%',
+        width: '92%'
     },
     settingsBorder: {
         borderBottomWidth: 1,

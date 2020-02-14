@@ -20,11 +20,6 @@ export const styles = StyleSheet.create({
     right: 15,
     top: 15
   },
-  logoStyle:{
-    position: 'absolute',
-    right: 15,
-    top: 15
-  },
   errorSection: {
     marginLeft: '4%',
     marginRight: '4%'
@@ -55,6 +50,11 @@ export const styles = StyleSheet.create({
     height: scaledHeight(48),
     justifyContent: "center",
     width: '92%'
+  },
+  logoStyle:{
+    position: 'absolute',
+    right: 15,
+    top: 15
   },
   textInputStyle: {
     alignItems: 'center',

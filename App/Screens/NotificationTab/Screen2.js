@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 class Screen2Component extends React.PureComponent {
   render() {
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
 
     return (
       <View>
@@ -14,10 +14,10 @@ class Screen2Component extends React.PureComponent {
   }
 }
 Screen2Component.propTypes = {
-  navigation: PropTypes.instanceOf(Object),
+  // navigation: PropTypes.instanceOf(Object),
 };
 
 Screen2Component.defaultProps = {
-  navigation: {},
+  // navigation: {},
 };
 export default Screen2Component;

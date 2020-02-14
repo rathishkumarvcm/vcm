@@ -1,10 +1,10 @@
 
 const AppUtils = {
   enableDebugLog: true,
-  debugLog: (printLog) => {
+  debugLog: (/* printLog */) => {
     //  Debugger Log
     if (AppUtils.enableDebugLog) {
-      console.log(`::React Log::  ${printLog}`);
+      // console.log(`::React Log::  ${printLog}`);
     }
   },
   replaceUndefinedOrNull: (key, value) => {

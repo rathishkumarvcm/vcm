@@ -49,7 +49,7 @@ class RetrievePINInfoComponent extends Component {
                                 </Text>
 
                                 <Text style={styles.retrievePINDescContentText}>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially centuries, but also the leap into centuries, but also the leap into centuries, but also the leap into centuries, but unchanged. It was popularised in the 1960s with the release Letraset sheets containing Lorem passages, and more recently with desktop publishing software like PageMaker including versions of Printer took a galley of type specimen book.
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially centuries, but also the leap into centuries, but also the leap into centuries, but also the leap into centuries, but unchanged. It was popularised in the 1960s with the release Letraset sheets containing Lorem passages, and more recently with desktop publishing software like PageMaker including versions of Printer took a galley of type specimen book.
                                 </Text>
 
                             </View>
