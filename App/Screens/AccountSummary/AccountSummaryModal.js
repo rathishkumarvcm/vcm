@@ -25,13 +25,7 @@ class AccountSummaryModal extends Component {
   }
 
   static getDerivedStateFromProps(props, prevState) {
-    console.log("getDerivedStateFromProps");
-
     const { groups, groupID } = props;
-
-    console.log("groups => ", groups);
-    console.log("groupID => ", groupID);
-
     if(groupID !== undefined && groupID !== null && prevState.selectedGroupID !== props.groupID) {
       const selectedGroup = groups.filter((group) => group.groupID === groupID );
       const selectedGroupName = selectedGroup[0].groupName;
@@ -40,18 +34,10 @@ class AccountSummaryModal extends Component {
           return account.accountID;
         }
       );  
-
-      console.log("selectedGroupName => ", selectedGroupName);
-      console.log("selectedItems => ", selectedItems);  
-
       return {selectedItems, groupName:selectedGroupName, selectedGroupID: groupID};
     }
 
     return {selectedGroupID: groupID};
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
   }
 
   onSelectedItemsChange = selectedItems => {
@@ -60,21 +46,17 @@ class AccountSummaryModal extends Component {
 
   getAllAccounts = () => {
 
-    const { groups, groupID } = this.props;
+    const { groups } = this.props;
 
-    if(groupID !== undefined && groupID !== null ) {
-      const selectedGroup = groups.filter((group) => group.groupID === groupID );
-      const selectedGroupName = selectedGroup[0].groupName;
-      const selectedItems = selectedGroup[0].accounts.map(
-        (account) => {
-          return account.accountID;
-        }
-      );  
-
-      console.log("selectedGroupName => ", selectedGroupName);
-      console.log("selectedItems => ", selectedItems);  
-    }
-
+    // if(groupID !== undefined && groupID !== null ) {
+    //   const selectedGroup = groups.filter((group) => group.groupID === groupID );
+    //   const selectedGroupName = selectedGroup[0].groupName;
+    //   const selectedItems = selectedGroup[0].accounts.map(
+    //     (account) => {
+    //       return account.accountID;
+    //     }
+    //   );  
+    // }
 
     const accountList = [];
     groups.forEach(element => {
@@ -151,8 +133,8 @@ class AccountSummaryModal extends Component {
 
 
   addNewGroupModal = () => {
-    const { groupName, selectedItems, listOfAllAccounts, selectedGroupID } = this.state;
-    const { showAddGroupModal, groupID } = this.props;
+    const { groupName, selectedItems, listOfAllAccounts } = this.state;
+    const { showAddGroupModal } = this.props;
 
     return (
       <Modal

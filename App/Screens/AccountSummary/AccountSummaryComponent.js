@@ -114,21 +114,7 @@ class AccountSummaryComponent extends Component {
   }
 
   addAccountToGroup = (selectedGroupID) => {
-
-    const { groups } = this.state;
-    if (selectedGroupID) {
-      const updatedGroup = groups.filter((group) => group.groupID === selectedGroupID );
-      console.log("updatedGroup => ", updatedGroup);
-    }
     this.setState({ showAddGroupModal: true, selectedGroupID});
-
-    // const { groups } = this.state;
-    // const { removeHoldingGroup } = this.props;
-
-    // if (groupID) {
-    //   const updatedGroup = groups.filter((group) => group.groupID !== groupID );
-    //   removeHoldingGroup(updatedGroup);
-    // }
   }
 
 
