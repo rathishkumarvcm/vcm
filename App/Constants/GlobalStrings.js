@@ -1572,6 +1572,26 @@ export default {
         titlePIN:"Retrieve PIN",
         createNewPIN:"Create New Security PIN",    
         confirmSecurityPIN:"Confirm Security Pin"   
-    },    
+    },
+    documentcenterComponent: {
+        home: "Home",
+        documentcenter: "Document Center",
+        documentpreference: "Document Preferences",
+        downloadadobereader: "Download Adobe Reader",
+        helpandfaq: "Help & FAQ's",
+        date: "Date",
+        ascending: "Ascending",
+        descending: "Descending",
+        alldocuments: "All Documents",
+        filterdocuments: "Filter Documents",
+        accountname: "Account Name",
+        documentdate: "Document Date",
+        category: "Category",
+        status: "Status",
+        sortby: "Sort By",
+        edit: "Edit",
+        print: "Print",
+        export: "Exprot"
+    }   
 
 };
