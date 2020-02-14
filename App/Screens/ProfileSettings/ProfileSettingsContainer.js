@@ -4,7 +4,7 @@ import {profileSettingsAction} from '../../Shared/Actions';
 
 const mapStateToProps = (state /* , props */) => (
   {
-    initialState: state.initialAppData,
+    // initialState: state.initialAppData,
     profileState: state.profileInformationData
   }
 );

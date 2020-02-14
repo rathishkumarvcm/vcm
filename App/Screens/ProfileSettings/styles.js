@@ -242,11 +242,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderColor: '#D4D4D4',
         borderWidth: 1,
-        height: scaledHeight(140),
         marginLeft: '4%',
         marginRight: '4%',
         marginTop: scaledHeight(20),
-        width: '92%'
+        width: '92%',
+        paddingBottom: '2%'
     },
     settingsBorder: {
         borderBottomWidth: 1,

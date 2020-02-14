@@ -82,69 +82,70 @@ class ProfileSettingsComponent extends Component {
     }
 
     profileSettingsMount = () => {
-        const { initialState, profileState, getProfileBasicInformations } = this.props;
-        const { personalInformations, contactInformations, financialInformationData, employmentInformationData } = this.state;
+        // const { initialState, profileState, getProfileBasicInformations } = this.props;
+        // const { personalInformations, contactInformations, financialInformationData, employmentInformationData } = this.state;
+        const { getProfileBasicInformations } = this.props;
         const payloadData = { "vcmId": "43534" };
         getProfileBasicInformations(payloadData);
-        if (this.props) {
-            this.setState({
-                profileRelationShipData: profileState.profileRelationShipDetails,
-                isRelationRefreshed: false,
-                isProfileRetired: profileState.profileIsRetired,
-                isServingMilitary: profileState.profileServingMilitary,
-                selectedIndex: -1,
+        // if (this.props) {
+        //     this.setState({
+        //         profileRelationShipData: profileState.profileRelationShipDetails,
+        //         isRelationRefreshed: false,
+        //         isProfileRetired: profileState.profileIsRetired,
+        //         isServingMilitary: profileState.profileServingMilitary,
+        //         selectedIndex: -1,
 
-                // Profile Information
-                personalInformations: {
-                    ...personalInformations,
-                    profileName: initialState.firstName,
-                    profilePrefix: profileState.profilePrefix,
-                    profileSuffix: profileState.profileSuffix,
-                    profileVcmID: profileState.profileVcmID,
-                    profileSsnNumber: profileState.profileSsnNumber,
-                    profileDob: profileState.profileDob,
-                    profileGender: profileState.profileGender,
-                    profileMaritalStatus: profileState.profileMaritalStatus,
-                    profileCitizenship: profileState.profileCitizenship,
-                },
+        //         // Profile Information
+        //         personalInformations: {
+        //             ...personalInformations,
+        //             profileName: initialState.firstName,
+        //             profilePrefix: profileState.profilePrefix,
+        //             profileSuffix: profileState.profileSuffix,
+        //             profileVcmID: profileState.profileVcmID,
+        //             profileSsnNumber: profileState.profileSsnNumber,
+        //             profileDob: profileState.profileDob,
+        //             profileGender: profileState.profileGender,
+        //             profileMaritalStatus: profileState.profileMaritalStatus,
+        //             profileCitizenship: profileState.profileCitizenship,
+        //         },
 
-                // Contact Information
-                contactInformations: {
-                    ...contactInformations,
-                    profileMailingAddress: profileState.profileMailingAddress,
-                    profilePhysicalAddress: profileState.profilePhysicalAddress,
-                },
+        //         // Contact Information
+        //         contactInformations: {
+        //             ...contactInformations,
+        //             profileMailingAddress: profileState.profileMailingAddress,
+        //             profilePhysicalAddress: profileState.profilePhysicalAddress,
+        //         },
 
-                // Phone Information
-                profilePrimaryMobile: profileState.profilePrimaryMobile,
+        //         // Phone Information
+        //         profilePrimaryMobile: profileState.profilePrimaryMobile,
 
-                // Email Information
-                profilePrimayMail: profileState.profilePrimayMail,
+        //         // Email Information
+        //         profilePrimayMail: profileState.profilePrimayMail,
 
-                // Finanicial Information
-                financialInformationData: {
-                    ...financialInformationData,
-                    profileAnnualIncome: `$ ${profileState.financialInformations.profileAnnualIncome}`,
-                    profileTaxBracket: `${profileState.financialInformations.profileTaxBracket} %`,
-                    profileNetWorth: `$ ${profileState.financialInformations.profileNetWorth}`,
-                    profileTaxFilling: profileState.financialInformations.profileTaxFilling,
-                },
+        //         // Finanicial Information
+        //         financialInformationData: {
+        //             ...financialInformationData,
+        //             profileAnnualIncome: `$ ${profileState.financialInformations.profileAnnualIncome}`,
+        //             profileTaxBracket: `${profileState.financialInformations.profileTaxBracket} %`,
+        //             profileNetWorth: `$ ${profileState.financialInformations.profileNetWorth}`,
+        //             profileTaxFilling: profileState.financialInformations.profileTaxFilling,
+        //         },
 
-                // Employment Information
-                employmentInformationData: {
-                    ...employmentInformationData,
-                    profileEmploymentStatus: profileState.employmentInformations.profileEmploymentStatus,
-                    profileEmpIndustry: profileState.employmentInformations.profileEmpIndustry,
-                    profileEmpOccupation: profileState.employmentInformations.profileEmpOccupation,
-                    profileEmpEmployer: profileState.employmentInformations.profileEmpEmployer,
-                    profilePrimarySourceIncome: profileState.employmentInformations.profileSourceOfIncome,
-                },
+        //         // Employment Information
+        //         employmentInformationData: {
+        //             ...employmentInformationData,
+        //             profileEmploymentStatus: profileState.employmentInformations.profileEmploymentStatus,
+        //             profileEmpIndustry: profileState.employmentInformations.profileEmpIndustry,
+        //             profileEmpOccupation: profileState.employmentInformations.profileEmpOccupation,
+        //             profileEmpEmployer: profileState.employmentInformations.profileEmpEmployer,
+        //             profilePrimarySourceIncome: profileState.employmentInformations.profileSourceOfIncome,
+        //         },
 
-                // Military Information
-                profileMilitaryBranch: profileState.profileMilitaryInformation.profileMilitaryBranch,
-                profileMilitaryRank: profileState.profileMilitaryInformation.profileMilitaryRank,
-            });
-        }
+        //         // Military Information
+        //         profileMilitaryBranch: profileState.profileMilitaryInformation.profileMilitaryBranch,
+        //         profileMilitaryRank: profileState.profileMilitaryInformation.profileMilitaryRank,
+        //     });
+        // }
     }
 
     profileSettingsUpdateScreen = (prevProps) => {
@@ -154,56 +155,91 @@ class ProfileSettingsComponent extends Component {
                 const responseKey = ActionTypes.GET_PROFILE_BASIC_INFORMATIONS;
                 if (profileState[`${responseKey}`]) {
                     const getProfileInformationResponse = profileState[`${responseKey}`];
-                    console.log('@@@@@@@@@@@@@ Profile Data Loading 1234', getProfileInformationResponse);
-                    console.log('@@@@@@@@@@@@@ Profile Data Loading 1234', getProfileInformationResponse.vcmId);
+                    this.setState({
+                        profilePrimaryMobile: getProfileInformationResponse.phoneInformation.primaryMobile,
+                        profilePrimayMail: getProfileInformationResponse.emailInformation.primaryEmail,
+                        personalInformations: {
+                            profileName: getProfileInformationResponse.name,
+                            profilePrefix: getProfileInformationResponse.prefix,
+                            profileSuffix: getProfileInformationResponse.suffix,
+                            profileVcmID: getProfileInformationResponse.vcmId,
+                            profileSsnNumber: getProfileInformationResponse.socialSecurityNumber,
+                            profileDob: getProfileInformationResponse.dateOfBirth,
+                            profileGender: getProfileInformationResponse.gender,
+                            profileMaritalStatus: getProfileInformationResponse.martialStatus,
+                            profileCitizenship: getProfileInformationResponse.citizenship,
+                        },
+                        contactInformations: {
+                            profileMailingAddress: getProfileInformationResponse.contactInformation.mailingAddress,
+                            profilePhysicalAddress: getProfileInformationResponse.contactInformation.physicalAddress,
+                        },
+                        isProfileRetired: profileState.profileIsRetired,
+                        isServingMilitary: profileState.profileServingMilitary
+                    });
+
+                    //  Relationship Details
+
+                    if (profileState.profileRelationShipDetails) {
+                        this.setState({
+                            profileRelationShipData: getProfileInformationResponse.relationshipInformation,
+                            isRelationRefreshed: true
+                        });
+                    }
+
+                    //  Financial Information
+
+                    if (profileState.financialInformations) {
+                        this.setState({
+                            financialInformationData: {
+                                profileAnnualIncome: getProfileInformationResponse.financialInformation.annualIncome,
+                                profileTaxBracket: getProfileInformationResponse.financialInformation.taxBracket,
+                                profileNetWorth: getProfileInformationResponse.financialInformation.netWorth,
+                                profileTaxFilling: getProfileInformationResponse.financialInformation.taxFilingStatus,
+                            }
+                        });
+                    }
+
+                    //  Employment Information
+
+                    if (profileState.employmentInformations) {
+                        this.setState({
+                            employmentInformationData: {
+                                profileEmploymentStatus: getProfileInformationResponse.employmentInformation.employmentStatus,
+                                profileEmpIndustry: getProfileInformationResponse.employmentInformation.industry,
+                                profileEmpOccupation: getProfileInformationResponse.employmentInformation.occupation,
+                                profileEmpEmployer: getProfileInformationResponse.employmentInformation.employerName,
+                                profilePrimarySourceIncome: getProfileInformationResponse.employmentInformation.industry
+                            }
+                        });
+                    }
                 }
-                this.setState({
-                    profilePrimaryMobile: profileState.profilePrimaryMobile,
-                    profilePrimayMail: profileState.profilePrimayMail,
-                    personalInformations: {
-                        profilePrefix: profileState.profilePrefix,
-                        profileSuffix: profileState.profileSuffix,
-                        profileVcmID: profileState.profileVcmID,
-                        profileSsnNumber: profileState.profileSsnNumber,
-                        profileDob: profileState.profileDob,
-                        profileGender: profileState.profileGender,
-                        profileMaritalStatus: profileState.profileMaritalStatus,
-                        profileCitizenship: profileState.profileCitizenship,
-                    },
-                    contactInformations: {
-                        profileMailingAddress: profileState.profileMailingAddress,
-                        profilePhysicalAddress: profileState.profilePhysicalAddress,
-                    },
-                    isProfileRetired: profileState.profileIsRetired,
-                    isServingMilitary: profileState.profileServingMilitary
-                });
 
                 //  Financial Information
 
-                if (profileState.financialInformations) {
-                    this.setState({
-                        financialInformationData: {
-                            profileAnnualIncome: `$ ${profileState.financialInformations.profileAnnualIncome}`,
-                            profileTaxBracket: `${profileState.financialInformations.profileTaxBracket} %`,
-                            profileNetWorth: `$ ${profileState.financialInformations.profileNetWorth}`,
-                            profileTaxFilling: profileState.financialInformations.profileTaxFilling,
-                        }
-                    });
-                }
+                // if (profileState.financialInformations) {
+                //     this.setState({
+                //         financialInformationData: {
+                //             profileAnnualIncome: `$ ${profileState.financialInformations.profileAnnualIncome}`,
+                //             profileTaxBracket: `${profileState.financialInformations.profileTaxBracket} %`,
+                //             profileNetWorth: `$ ${profileState.financialInformations.profileNetWorth}`,
+                //             profileTaxFilling: profileState.financialInformations.profileTaxFilling,
+                //         }
+                //     });
+                // }
 
                 //  Employment Information
 
-                if (profileState.employmentInformations) {
-                    this.setState({
-                        employmentInformationData: {
-                            profileEmploymentStatus: profileState.employmentInformations.profileEmploymentStatus,
-                            profileEmpIndustry: profileState.employmentInformations.profileEmpIndustry,
-                            profileEmpOccupation: profileState.employmentInformations.profileEmpOccupation,
-                            profileEmpEmployer: profileState.employmentInformations.profileEmpEmployer,
-                            profilePrimarySourceIncome: profileState.employmentInformations.profileSourceOfIncome
-                        }
-                    });
-                }
+                // if (profileState.employmentInformations) {
+                //     this.setState({
+                //         employmentInformationData: {
+                //             profileEmploymentStatus: profileState.employmentInformations.profileEmploymentStatus,
+                //             profileEmpIndustry: profileState.employmentInformations.profileEmpIndustry,
+                //             profileEmpOccupation: profileState.employmentInformations.profileEmpOccupation,
+                //             profileEmpEmployer: profileState.employmentInformations.profileEmpEmployer,
+                //             profilePrimarySourceIncome: profileState.employmentInformations.profileSourceOfIncome
+                //         }
+                //     });
+                // }
 
                 //  Military Information
 
@@ -211,15 +247,6 @@ class ProfileSettingsComponent extends Component {
                     this.setState({
                         profileMilitaryBranch: profileState.profileMilitaryInformation.profileMilitaryBranch,
                         profileMilitaryRank: profileState.profileMilitaryInformation.profileMilitaryRank
-                    });
-                }
-
-                //  Relationship Details
-
-                if (profileState.profileRelationShipDetails) {
-                    this.setState({
-                        profileRelationShipData: profileState.profileRelationShipDetails,
-                        isRelationRefreshed: true
                     });
                 }
             }
@@ -275,7 +302,7 @@ class ProfileSettingsComponent extends Component {
                         <Text style={styles.editEmailType}
                             onPress={this.relationShipOnPressed(index)}
                         >
-                            {item.relationShipName}
+                            {item.name}
                         </Text>
                     </View>
 
@@ -308,7 +335,7 @@ class ProfileSettingsComponent extends Component {
                     </Text>
 
                     <Text style={styles.profileSettingValueLabel}>
-                        {item.relationShipType}
+                        {item.relationshipToAccountOwner}
                     </Text>
                 </View>
 
@@ -318,7 +345,7 @@ class ProfileSettingsComponent extends Component {
                     </Text>
 
                     <Text style={styles.profileSettingValueLabel}>
-                        {item.relationShipGender}
+                        {item.gender}
                     </Text>
                 </View>
 
@@ -328,7 +355,7 @@ class ProfileSettingsComponent extends Component {
                     </Text>
 
                     <Text style={styles.profileSettingValueLabel}>
-                        {item.relationShipEmail}
+                        {item.emailAddress}
                     </Text>
                 </View>
 
@@ -338,7 +365,7 @@ class ProfileSettingsComponent extends Component {
                     </Text>
 
                     <Text style={styles.profileSettingValueLabel}>
-                        {item.relationShipStatus}
+                        {item.martialStatus}
                     </Text>
                 </View>
             </View>
@@ -1088,14 +1115,14 @@ class ProfileSettingsComponent extends Component {
 ProfileSettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     profileState: PropTypes.instanceOf(Object),
-    initialState: PropTypes.instanceOf(Object),
+    // initialState: PropTypes.instanceOf(Object),
     getProfileBasicInformations: PropTypes.func
 };
 
 ProfileSettingsComponent.defaultProps = {
     navigation: {},
     profileState: {},
-    initialState: {},
+    // initialState: {},
     getProfileBasicInformations: null
 };
 
