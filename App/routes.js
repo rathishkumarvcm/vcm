@@ -1176,6 +1176,18 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+    retrievePINInfo: {
+        screen: RetrievePINInfoComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    retrievePIN: {
+        screen: RetrievePINComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
 },
     {
         initialRouteName: "login"
