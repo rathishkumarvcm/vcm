@@ -1,7 +1,6 @@
 import Dash from 'react-native-dash';
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view'; 
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import PropTypes from 'prop-types';
 import styles from './styles';
