@@ -97,32 +97,27 @@ topSection :{ left: 0 ,top: 5}
 
 export const GDropDownComponent = props => {
   const {dropDownLayout,dropDownTextName,dropDownName,isOptional,data,errorFlag,
-    dropDownValue,selectedDropDownValue,errorText,itemCount,disabled} = props;
+    dropDownValue,selectedDropDownValue,errorText,itemCount,disabled, showtitle} = props;
   return(
 
     <View style={getCustomStyle(styles.dropDownLayout,dropDownLayout)}>
-    <Text style={getCustomStyle(styles.dropDownTextName, dropDownTextName)}>
-      <Text>
-        {dropDownName}
-      </Text>
-       {isOptional && <Text style={styles.optionalTxt}>{" (Optional)"}</Text>}
-    </Text>
-            
-    <Dropdown
-      data={data}
-      dropdownOffset={styles.topSection}
-      baseColor="#DEDEDF"
-      // dropdownPosition={-5.75}
-      placeholder= "Select"
-      pickerStyle={styles.pickerStyle}
-      inputContainerStyle={!errorFlag ? styles.inputStyle : styles.errorInputStyle}
-      value={dropDownValue}
-      onChangeText={selectedDropDownValue}
-      error={errorFlag ? errorText : null}
-      itemCount={itemCount}
-      disabled={disabled}
-
-    />
+      { showtitle &&
+        <Text style={getCustomStyle(styles.dropDownTextName, dropDownTextName)}><Text>{dropDownName}</Text>{isOptional && <Text style={styles.optionalTxt}>{" (Optional)"}</Text>}</Text>
+      }    
+      <Dropdown
+        data={data}
+        dropdownOffset={styles.topSection}
+        baseColor="#DEDEDF"
+        // dropdownPosition={-5.75}
+        placeholder= "Select"
+        pickerStyle={styles.pickerStyle}
+        inputContainerStyle={!errorFlag ? styles.inputStyle : styles.errorInputStyle}
+        value={dropDownValue}
+        onChangeText={selectedDropDownValue}
+        error={errorFlag ? errorText : null}
+        itemCount={itemCount}
+        disabled={disabled}
+      />
     </View>
 
 );
@@ -141,6 +136,7 @@ GDropDownComponent.propTypes = {
   // textInputStyle: PropTypes.instanceOf(Object),
   // dropDownPostition : PropTypes.instanceOf(Object),
   selectedDropDownValue: PropTypes.func,
+  showtitle: PropTypes.bool,
  // changeState : PropTypes.func,
   errorText:PropTypes.string,
   dropDownValue : PropTypes.string,
@@ -164,6 +160,7 @@ GDropDownComponent.defaultProps = {
   // textInputStyle:{},
   // dropDownPostition:{},
   selectedDropDownValue:() => { },
+  showtitle: true,
   // changeState:null,
   errorText:"",
   dropDownValue :"",

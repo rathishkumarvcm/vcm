@@ -1581,6 +1581,26 @@ export default {
         signInWithOnline:"Sign in with Online ID",
         confirmOTP:"Confirm OTP",
         sendOTP:"Send OTP"       
-    }
+    },
+    documentcenterComponent: {
+        home: "Home",
+        documentcenter: "Document Center",
+        documentpreference: "Document Preferences",
+        downloadadobereader: "Download Adobe Reader",
+        helpandfaq: "Help & FAQ's",
+        date: "Date",
+        ascending: "Ascending",
+        descending: "Descending",
+        alldocuments: "All Documents",
+        filterdocuments: "Filter Documents",
+        accountname: "Account Name",
+        documentdate: "Document Date",
+        category: "Category",
+        status: "Status",
+        sortby: "Sort By",
+        edit: "Edit",
+        print: "Print",
+        export: "Exprot"
+    }   
 
 };

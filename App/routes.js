@@ -41,6 +41,7 @@ import AccountMessagingGeneralDocuments from "./Screens/AccountMessagingGeneralD
 import accountMessagingInvestmentAccounts from "./Screens/AccountMessagingInvestmentAccount";
 import AccountMessagingSecurityAndFraud from './Screens/AccountMessagingSecurityAndFraud/AccountMessagingSecurityAndFraudComponent';
 import AccountMessagingDeviceManagement from "./Screens/AccountMessagingDeviceManagement";
+import DocumentCenter from "./Screens/DocumentCenter";
 // Dashboard
 
 
@@ -244,7 +245,7 @@ const BottomTabNavigator = createBottomTabNavigator({
 
     },
     portfolio: {
-        screen: Screen2Component,
+        screen: SpecialtyAccSubmit,
         navigationOptions: {
             tabBarIcon: (obj) => customTab({ object: obj, route: "portfolio" }),
             tabBarLabel: 'Portfolio',
@@ -767,6 +768,12 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
+    DocumentCenter: {
+        screen: DocumentCenter,
+        navigationOptions: {
+            header: null
+        }
+    },
     editRelationshipInfo: {
         screen: EditRelationshipInfo,
         navigationOptions: {
@@ -1153,18 +1160,6 @@ const AppNavigator = createStackNavigator({
     },
     changePIN: {
         screen: ChangePINComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    retrievePINInfo: {
-        screen: RetrievePINInfoComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    retrievePIN: {
-        screen: RetrievePINComponent,
         navigationOptions: {
             header: null,
         }

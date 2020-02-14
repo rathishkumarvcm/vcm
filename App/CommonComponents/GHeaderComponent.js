@@ -65,6 +65,10 @@ const newData = [
     title: 'RMD Calculator',
   },
   {
+    naviagteTo: "DocumentCenter",
+    title: 'Document Center',
+  },
+  {
     //  navigateTo:'Logout'
     title: 'Sign Out',
   }

@@ -26,6 +26,10 @@ const GDateComponentStyle = (props) => {
             width: '100%',
             ...props.componentStyle
         },
+        container: {
+            alignSelf: 'stretch',
+            width: '100%'
+        },
         customStyles:{
             
               //  dateIcon: props.dateIconStyle,
