@@ -15,7 +15,19 @@ import { scaledHeight } from "../Utils/Resolution";
     primaryColorDarkRGBA: "rgba(128, 128, 128, 0.6)",
     primaryColorBGRGBA: "rgba(0, 0, 0, 0.6)",
     primaryColorModalRGBA: "rgba(0, 0, 0, 0.4)",
-    loginTextColour: "#999B9F"
+    loginTextColour: "#999B9F",
+    DARK_BLUE: '#194C7D', // dark blue
+    BLUE: '#004A98', // bright dark blue
+    CORNER_GREEN:'#8BC105', // corner green
+    ORANGE:'#EA7400', // orange
+    BACKGROUND_GRAY:"#F7F7F7", // screen bg
+    BORDER_GRAY:"#242623",
+    ACTIVITYINDICATOR_COLOR:"#17d8e3",
+    STATUS_COLOR:'#17d8e3',
+    LIGHT_TRANSPARENT_GRAY:'rgba(0,0,0,0.1)',
+    GRAY:'#8f8f8f',
+    FONT_COLOR:'#56565A', // font color
+    WHITE_COLOR:'#FFFFFF',
   },
 
   fontSize: {
@@ -26,17 +38,18 @@ import { scaledHeight } from "../Utils/Resolution";
     heading4: scaledHeight(17),
     heading5: scaledHeight(16),
     title: scaledHeight(36),
-    claimLabel: scaledHeight(12),
-    benefitLink: scaledHeight(14),
-    twentyFour: scaledHeight(24),
-    sixteen: scaledHeight(16),
-    fourteen: scaledHeight(14),
-    twenty: scaledHeight(20),
-    thirty: scaledHeight(30),
-    thirtyTwo: scaledHeight(32),
     ten: scaledHeight(10),
     eleven: scaledHeight(11),
-    notification: scaledHeight(15),
+    twelve: scaledHeight(12),
+    thirteen: scaledHeight(13),
+    fourteen: scaledHeight(14),
+    fifteen: scaledHeight(15),   
+    sixteen: scaledHeight(16),   
+    eighteen:scaledHeight(18),
+    twenty: scaledHeight(20),
+    twentyFour: scaledHeight(24), 
+    thirty: scaledHeight(30),
+    thirtyTwo: scaledHeight(32),    
     fourtyEight: scaledHeight(48)
   },
   lineHeight: {

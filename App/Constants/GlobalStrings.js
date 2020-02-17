@@ -1602,6 +1602,13 @@ export default {
         edit: "Edit",
         print: "Print",
         export: "Exprot"
-    }   
+    },    
+    changePassword:{
+        lowerCase:"At Least One Lower Case Letter[A-Z]",
+        upperCase:"At Least One Upper Case Letter [A-Z]",
+        numerals:"At Least One Numeral [0-9]",
+        symbol:"At Least One Symbol [!@#^&*]",
+        minimumCharacter:"Minimum 8 Characters"     
+    },   
 
 };

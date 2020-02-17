@@ -199,6 +199,8 @@ import RetrievePINInfoComponent from './Screens/RetrievePINInfo';
 import RetrievePINComponent from './Screens/RetrievePIN';
 import SignInNotificationComponent from './Screens/SignInNotification';
 import SignInComponent from './Screens/SignIn';
+import changePasswordComponent from './Screens/ChangePassword';
+
 
 
 // Notification Tabs
@@ -1185,6 +1187,12 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+    changePassword:{
+        screen: changePasswordComponent,
+        navigationOptions: {
+            header: null,
+        }
+    }
 },
     {
         initialRouteName: "login"
