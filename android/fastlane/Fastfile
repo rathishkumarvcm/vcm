@@ -44,9 +44,15 @@ platform :android do
         #   properties: { 'versionCode' => versionCode }
         # )
     
-    increment_version_code
     gradle(task: "assembleRelease")
     #crashlytics
+
+    increment_version_code(
+      gradle_file_path: "../build.gradle",
+      #ext_constant_name: "test"
+      #app_folder_name:"app"
+)
+
 
     firebase_app_distribution(
         app: "1:416732411627:android:4182945fb7d2a2b939b0ae",
