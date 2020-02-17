@@ -53,6 +53,13 @@ pipeline {
             steps {
                 sh 'echo Deploying'
                 sh 'npm install'
+                dir('android')
+                {
+                    sh 'echo AndroidBuild'
+                    sh 'bundle install'
+                    sh 'bundle update fastlane'
+                    sh 'bundle exec fastlane beta'
+                }
                 dir('ios')
                 {
                     sh 'echo iOSBuild'
@@ -62,13 +69,7 @@ pipeline {
                     // sh 'gem install json -v "2.3.0"'
                     sh 'bundle exec fastlane beta'
                 }
-                dir('android')
-                {
-                    sh 'echo AndroidBuild'
-                    sh 'bundle install'
-                    sh 'bundle update fastlane'
-                    sh 'bundle exec fastlane beta'
-                }
+
             }
         }
 
