@@ -190,9 +190,7 @@ import RMDDashboardComponent from './Screens/RMDDashboard';
 
 // MSR
 import MSRAccessFormList from './Screens/MSRAccessForms';
-import MSRServiceRequestScreen from './Screens/MSRServiceRequest';
-import SecureMessageComponent from './Screens/MSRSecureMessage';
-
+import FloatingButtonComponent from './Screens/MSRServiceRequest';
 
 import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
 
@@ -201,9 +199,14 @@ import RetrievePINInfoComponent from './Screens/RetrievePINInfo';
 import RetrievePINComponent from './Screens/RetrievePIN';
 import SignInNotificationComponent from './Screens/SignInNotification';
 import SignInComponent from './Screens/SignIn';
-import changePasswordComponent from './Screens/ChangePassword';
 
 
+import AccountRecoveryComponent from './Screens/AccountRecoveryPreference';
+import sessionTimeOutComponent from './Screens/SessionTimeOut';
+import ConfirmChangesComponent from './Screens/ConfirmChanges';
+import ContactUsComponent from './Screens/ContactUs';
+import LogoutComponent from './Screens/LogOut';
+import WarningComponent from './Screens/Warning';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -256,7 +259,7 @@ const BottomTabNavigator = createBottomTabNavigator({
         },
     },
     invest: {
-        screen: MSRServiceRequestScreen,
+        screen: FloatingButtonComponent,
         navigationOptions: {
             tabBarIcon: (obj) => customTab({ object: obj, route: "invest" }),
             tabBarLabel: 'Invest',
@@ -274,10 +277,7 @@ const DrawerNavigator = createDrawerNavigator({
     editMilitaryInfo: {
         screen: EditMilitaryInfo,
     },
-    notificationTabs: NotificationTabNavigator,
-    msrLandingScreen: MSRServiceRequestScreen,
-    msrSecureMessage: SecureMessageComponent
-
+    NotificationTabs: NotificationTabNavigator,
 }, {
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
@@ -1192,12 +1192,43 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    changePassword: {
-        screen: changePasswordComponent,
+    AccountRecovery:{
+        screen:AccountRecoveryComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    sessionTimeOut:{
+        screen:sessionTimeOutComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    confirmChanges:{
+        screen:ConfirmChangesComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    contactUs:{
+        screen:ContactUsComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    logOut:{
+        screen:LogoutComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    warning:{
+        screen:WarningComponent,
         navigationOptions: {
             header: null,
         }
     }
+
 },
     {
         initialRouteName: "login"

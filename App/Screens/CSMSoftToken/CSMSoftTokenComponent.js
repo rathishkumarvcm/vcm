@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent,GIcon } from '../../CommonComponents';
-import styles from '../ChangeSignInMethod/styles';
-import gblStrings from '../../Constants/GlobalStrings';
+import { GTitleBarComponent, GInputComponent } from '../../CommonComponents';
+import styles from './styles';
+import globalString from '../../Constants/GlobalStrings';
 //  import { CustomCheckBox } from '../../AppComponents';
 
 
@@ -15,9 +15,9 @@ class CSMSoftTokenComponent extends Component {
 
         this.state ={
           firstToken:"",
-          token1Val:true,
+          // token1Val:true,
           secondToken:"",
-          token2Val:true,
+          // token2Val:true,
           additionaProtection:false,
           //  isValidationSuccess:false,
           //  errMsg:"",
@@ -69,7 +69,7 @@ class CSMSoftTokenComponent extends Component {
         signInMethods("signInMethodsData", payloadData);
         //  console.log("----signInMethods",payloadData);
         
-        navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.softToken,index:1});
+        navigation.navigate('ChangeSignInMethod',{showAlert:true,message:globalString.userManagement.softToken,index:1});
     }
 
     isEmpty = (str) => {
@@ -86,17 +86,17 @@ class CSMSoftTokenComponent extends Component {
         let isValidationSuccess = false;
         if (this.isEmpty(firstToken)) {
             errMsg="error";
-            this.setState({ token1Val: false });
+            // this.setState({ token1Val: false });
         } 
         else{
-            this.setState({ token1Val: true });
+            // this.setState({ token1Val: true });
         }
          if (this.isEmpty(secondToken)) {
             errMsg="error";
-            this.setState({ token2Val: false });
+            // this.setState({ token2Val: false });
         }
         else{
-            this.setState({ token2Val: true });
+            // this.setState({ token2Val: true });
         }
          
         if (errMsg !== "error") {
@@ -108,10 +108,74 @@ class CSMSoftTokenComponent extends Component {
     }
 
     render() {
-        const{navigation}=this.props;
-        const{firstToken,secondToken,token1Val,token2Val}=this.state;
+        const {booSecurePin,errSecurePin,securePin} = this.state;
         return(
             <View style={styles.container}>
+              
+            <GTitleBarComponent
+                toolbarTiltle="Change Sign In Method"
+                backPress={this.navigationGoBack}
+            />
+
+            <View style={styles.layoutContainer}>
+                <View style={styles.cornerTriangle} />
+                <ScrollView style={styles.scrollStyle} contentContainerStyle={styles.scrollStyle}>
+
+                    <View style={styles.contentContainer}>
+
+                        <View style={styles.securePINDetailsContainer}>
+
+                            <Text style={styles.currentPINText}>
+                            Download the Token Generation
+                            </Text>
+                            <Text style={styles.mandatoryText}>
+                            Application from the below link and enter the Token Details
+                            </Text>
+
+                            <Text style={styles.mandatoryText}>
+                            * All fields are mandatory except mentioned optional.
+                            </Text>
+
+                            <Text style={styles.securePINText}>
+                                {globalString.userManagement.firstToken}
+                            </Text>
+
+                            <GInputComponent
+                                propInputStyle={booSecurePin ? styles.securePINTextBoxError : styles.securePINTextBox}
+                                // placeholder={globalString.recoverPassword.placeholder_ssn}
+                                onChangeText={this.setSecurePIN}    
+                                value={securePin}                            
+                            />   
+                            <Text style={styles.errorMessage}>{errSecurePin}</Text>
+
+                            <Text style={styles.securePINText}>
+                                {globalString.userManagement.secondToken}
+                            </Text>
+
+                            <GInputComponent
+                                propInputStyle={booSecurePin ? styles.securePINTextBoxError : styles.securePINTextBox}
+                                // placeholder={globalString.recoverPassword.placeholder_ssn}
+                                onChangeText={this.setSecurePIN}    
+                                value={securePin}                            
+                            />   
+                            <Text style={styles.errorMessage}>{errSecurePin}</Text>
+
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+
+            <View style={styles.bottomView}>
+
+                <TouchableOpacity onPress={this.navigationResetOpt} style={styles.touchableStyle}>
+                    <Text style={styles.submitButtonStyle} onPress={this.navigationResetOpt}>
+                        {globalString.common.save}
+                    </Text>
+                </TouchableOpacity>
+
+            </View>
+            </View>
+            /* View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                 <TouchableOpacity>
@@ -166,20 +230,7 @@ class CSMSoftTokenComponent extends Component {
                 />
                 </View>
                 </View>
-                {/* <View style={styles.agreeSectionGrp} >
-                            <CustomCheckBox
-                                size={24}
-                                itemBottom={0}
-                                itemTop={0}
-                                outerCicleColor={"#707070"}
-                                innerCicleColor={"#61285F"}
-                                labelStyle={styles.agreeTermsTxt}
-                                label={gblStrings.userManagement.additionaProtection}
-                                selected={this.state.additionaProtection}
-                                onPress={this.onCheckBoxCheck}
-                            />
-
-        </View> */}
+               
                 <GButtonComponent
                 buttonStyle={styles.cancelButton}
                 buttonText={gblStrings.common.back}
@@ -203,7 +254,7 @@ class CSMSoftTokenComponent extends Component {
                 <GFooterComponent />
                 </ScrollView>
                 
-            </View>
+        </View> */ 
         );
 }
 }
