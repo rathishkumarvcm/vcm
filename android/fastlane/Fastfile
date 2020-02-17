@@ -29,22 +29,23 @@ platform :android do
   lane :beta do
 
         # Get the last version code and increment it.
-        versionCode = File.read("metadata/versionCode").to_i
-        versionCode = versionCode+1
+        # versionCode = File.read("metadata/versionCode").to_i
+        # versionCode = versionCode+1
     
-        f = File.new("metadata/versionCode", "w")
-        f.write(versionCode)
-        f.close
+        # f = File.new("metadata/versionCode", "w")
+        # f.write(versionCode)
+        # f.close
     
-        # Build the release version of the Android App
-        gradle(
-          task: "assembleRelease",
-          build_type: "Release",
-          project_dir: "android/",
-          properties: { 'versionCode' => versionCode }
-        )
+        # # Build the release version of the Android App
+        # gradle(
+        #   task: "assembleRelease",
+        #   build_type: "Release",
+        #   project_dir: "android/",
+        #   properties: { 'versionCode' => versionCode }
+        # )
     
-    # gradle(task: "assembleRelease")
+    increment_version_code
+    gradle(task: "assembleRelease")
     #crashlytics
 
     firebase_app_distribution(
