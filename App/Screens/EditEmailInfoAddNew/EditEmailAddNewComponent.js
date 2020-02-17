@@ -38,7 +38,7 @@ class editEmailAddNewComponent extends Component {
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.editLabelBold}>
                             {globalString.editEmailInformations.editEmailTitle}
                         </Text>
                     </View>
