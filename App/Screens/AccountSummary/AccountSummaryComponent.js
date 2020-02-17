@@ -61,6 +61,10 @@ class AccountSummaryComponent extends Component {
         </View>
         <View style={styles.headerReturnsView}>
           <Text style={styles.returnText}>Returns</Text>
+          <View style={styles.qtdytdView}>
+            <Text style={styles.qtdText}>QTD</Text>
+            <Text style={styles.ytdText}>YTD</Text>
+          </View>
         </View>
       </View>
     );
@@ -87,15 +91,8 @@ class AccountSummaryComponent extends Component {
   }
 
   onClickAdd = (holdingGroup) => {
-    // this.show();
-    // const randomGroupID = this.createRandomNumber();
     const { addHoldingGroup } = this.props;
     if (holdingGroup.groupName && holdingGroup.accounts.length !== 0) {
-      // const newHoldingGroup = {
-      //   "groupName": holdingGroup.groupName,
-      //   "groupID": randomGroupID,
-      //   "accounts": holdingGroup.selectedAccounts,
-      // };
       addHoldingGroup(holdingGroup);
       this.hide();
     }
@@ -109,19 +106,19 @@ class AccountSummaryComponent extends Component {
     const { removeHoldingGroup } = this.props;
 
     if (groupID) {
-      const updatedGroup = groups.filter((group) => group.groupID !== groupID );
+      const updatedGroup = groups.filter((group) => group.groupID !== groupID);
       removeHoldingGroup(updatedGroup);
     }
   }
 
   addAccountToGroup = (selectedGroupID) => {
-    this.setState({ showAddGroupModal: true, selectedGroupID});
+    this.setState({ showAddGroupModal: true, selectedGroupID });
   }
 
   removeAccountFromGroup = (selectedAccountID, group) => {
     const { addHoldingGroup } = this.props;
     const newAccountList = group.accounts.filter((account) => account.accountID !== selectedAccountID);
-    const newHoldingGroup = {...group, accounts: newAccountList};
+    const newHoldingGroup = { ...group, accounts: newAccountList };
     addHoldingGroup(newHoldingGroup);
   }
 
@@ -159,8 +156,8 @@ AccountSummaryComponent.propTypes = {
 AccountSummaryComponent.defaultProps = {
   navigation: {},
   accountSummaryInitialState: {},
-  addHoldingGroup: () => {},
-  removeHoldingGroup: () => {}
+  addHoldingGroup: () => { },
+  removeHoldingGroup: () => { }
 };
 
 export default AccountSummaryComponent;

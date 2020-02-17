@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     headerReturnsView: {
         flex: 0.34,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center'
     },
     holdingGroupText: {
@@ -79,11 +79,24 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         // marginLeft: scaledWidth(0),
     },
-
+    qtdText: {
+        ...commonStyles.commonHeaderText,
+        alignSelf: 'center',
+        marginBottom: scaledWidth(0),
+        marginRight: scaledWidth(10),
+        marginTop: scaledWidth(0),
+    },
+    qtdytdView: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginRight: scaledWidth(20),
+    },
     returnText: {
         ...commonStyles.commonHeaderText,
         alignSelf: 'center',
-        // marginLeft: scaledWidth(40),
+        marginBottom: scaledWidth(5),
+        marginRight: scaledWidth(20),
+        marginTop: scaledWidth(0),
     },
     scrollView: {
         flex: .70
@@ -93,6 +106,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         // justifyContent:'space-evenly',
         width: '100%',
+    },
+    ytdText: {
+        ...commonStyles.commonHeaderText,
+        alignSelf: 'center',
+        marginBottom: scaledWidth(0),
+        marginTop: scaledWidth(0),
     },
 });
 

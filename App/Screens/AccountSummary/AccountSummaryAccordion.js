@@ -34,12 +34,10 @@ export default class AccountSummaryAccordion extends Component {
 
     setAccountMenuRef = index => input => {
         this.accountMenu[Number(index)] = input;
-        // (input) => { this.accountMenu[index] = input; }
     };
 
     setGroupMenuRef = input => {
         this.groupMenu = input;
-        // (input) => { this.groupMenu = input; }
     };
 
 
@@ -97,6 +95,26 @@ export default class AccountSummaryAccordion extends Component {
         removeAccount(selectedAccountID, group);
     }
 
+    manageAccountServices = (index) => () => {
+        this.hideMenu(index);
+    }
+
+    managePreferences = (index) => () => {
+        this.hideMenu(index);
+    }
+
+    viewStatement = (index) => () => {
+        this.hideMenu(index);
+    }
+
+    viewAccountActivity = (index) => () => {
+        this.hideMenu(index);
+    }
+
+    placeAnOrder = (index) => () => {
+        this.hideMenu(index);
+    }
+
     renderAccountList = ({ item, index }) => {
 
         return (
@@ -136,15 +154,15 @@ export default class AccountSummaryAccordion extends Component {
                         )}
                     >
                         <MenuDivider />
-                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.placeAnOrder}</MenuItem>
+                        <MenuItem onPress={this.placeAnOrder(index)}>{GlobalStrings.accountSummary.placeAnOrder}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.viewAccountActivity}</MenuItem>
+                        <MenuItem onPress={this.viewAccountActivity(index)}>{GlobalStrings.accountSummary.viewAccountActivity}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.viewStatement}</MenuItem>
+                        <MenuItem onPress={this.viewStatement(index)}>{GlobalStrings.accountSummary.viewStatement}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.managePreferences}</MenuItem>
+                        <MenuItem onPress={this.managePreferences(index)}>{GlobalStrings.accountSummary.managePreferences}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.manageAccountServices}</MenuItem>
+                        <MenuItem onPress={this.manageAccountServices(index)}>{GlobalStrings.accountSummary.manageAccountServices}</MenuItem>
                         <MenuDivider />
                         <MenuItem onPress={this.removeAccountFromGroup(index)}>{GlobalStrings.accountSummary.removeAccount}</MenuItem>
                         <MenuDivider />
