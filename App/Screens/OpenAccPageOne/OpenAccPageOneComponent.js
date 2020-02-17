@@ -166,14 +166,14 @@ class OpenAccPageOneComponent extends Component {
         const selectedAccount = getParam('selectedAccount', '');
         AppUtils.debugLog(`selectedAccount::::> ${selectedAccount}`);
 
-        const { selectedItemID } = this.state;
+        // const { selectedItemID } = this.state;
 
 
         let payload = {
             "companyNumber": "591",
             "onlineId": "arumugamt",
             "customerId": "761735",
-            "accountType": selectedItemID,
+            "accountType": selectedAccount.key,
             "accountMainCategory": selectedAccount.value,
             "accountSubType": (accOpeningData && accOpeningData.accountSubType) ? accOpeningData.accountSubType.key : "",
             "accountSubCategory": (accOpeningData && accOpeningData.accountSubType) ? accOpeningData.accountSubType.value : "",

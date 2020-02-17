@@ -67,6 +67,7 @@ class OpenAccPageTwoComponent extends Component {
                 suffixDropDown: false,
                 dob: "",
                 gender: "",
+                genderKeyValue: "",
                 maritalStatus: "",
                 maritalStatusDropDown: false,
                 citizenship: "U.S",
@@ -123,10 +124,11 @@ class OpenAccPageTwoComponent extends Component {
                         {
                             phoneNumber: "",
                             phoneType: "Mobile",
-                            contactDuring: "",
+                            callTimePreference: "",  
                             isPrimary: true,
                             phoneNumberValidation: true,
                             phoneTypeValidation: true,
+                            contactDuring:"",
                             contactDuringValidation: true,
 
                         }
@@ -137,12 +139,12 @@ class OpenAccPageTwoComponent extends Component {
                         {
                             phoneNumber: "",
                             phoneType: "Home",
-                            contactDuring: "",
+                            callTimePreference: "",
                             isPrimary: true,
                             phoneNumberValidation: true,
                             phoneTypeValidation: true,
+                            contactDuring:"",
                             contactDuringValidation: true,
-
                         }
                     ],
                 },
@@ -151,12 +153,12 @@ class OpenAccPageTwoComponent extends Component {
                         {
                             phoneNumber: "",
                             phoneType: "Work",
-                            contactDuring: "",
+                            callTimePreference: "",
                             isPrimary: true,
                             phoneNumberValidation: true,
                             phoneTypeValidation: true,
+                            contactDuring:"",
                             contactDuringValidation: true,
-
                         }
                     ],
                 },
@@ -165,12 +167,12 @@ class OpenAccPageTwoComponent extends Component {
                         {
                             phoneNumber: "",
                             phoneType: "Fax",
-                            contactDuring: "",
+                            callTimePreference: "",
                             isPrimary: true,
                             phoneNumberValidation: true,
                             phoneTypeValidation: true,
+                            contactDuring:"",
                             contactDuringValidation: true,
-
                         }
                     ],
                 },
@@ -1324,6 +1326,78 @@ class OpenAccPageTwoComponent extends Component {
         }
     }
 
+
+    generatePersonalInfoPayload = (sectionKey) =>{
+        const { [sectionKey]: sectionName } = this.state;
+        const personalizePayload = {
+            "personalInfo": {
+                "prefix": sectionName.prefix.value || "",
+                "firstName": sectionName.firstName || "",
+                "lastName": sectionName.lastName || "",
+                "suffix": sectionName.suffix || "",
+                "dateOfBirth": sectionName.dob || "",
+                "gender": sectionName.gender.key || "",
+                "maritalStatus": sectionName.maritalStatus.key || "",
+                "citizenship": sectionName.citizenship.key || "",
+                "ssnTin": sectionName.socialSecurityNo || "",
+                "mailingAddress": {
+                    "addressType": sectionName.mailingAddressType.value || "",
+                    "streetNbr": sectionName.addrLine1 || "",
+                    "streetName": sectionName.addrLine2 || "",
+                    "zip": sectionName.zipcode || "",
+                    "city": sectionName.city || "",
+                    "state": sectionName.stateCity || ""
+                },
+                "isPhysAddrSameAsMailAddr": sectionName.isYourPhysicalAddresSame || "",
+                "physicalAddress": {
+                    "addressType": sectionName.isYourPhysicalAddresSame ? sectionName.mailingAddressType.value || "" : sectionName.mailingAddressType,
+                    "streetNbr": sectionName.isYourPhysicalAddresSame ? sectionName.addrLine1 || "" : sectionName.addrLine1_Phy,
+                    "streetName": sectionName.isYourPhysicalAddresSame ? sectionName.addrLine2 || "" : sectionName.addrLine2_Phy,
+                    "zip": sectionName.isYourPhysicalAddresSame ? sectionName.zipcode || "" : sectionName.zipcode_Phy,
+                    "city": sectionName.isYourPhysicalAddresSame ? sectionName.city || "" : sectionName.city_Phy,
+                    "state": sectionName.isYourPhysicalAddresSame ? sectionName.stateCity || "" : sectionName.stateCity_Phy,
+                },
+                "contactDetails": {
+                    "mobile": sectionName.mobile.contactDetails,
+                    "home": sectionName.home.contactDetails,
+                    "work": sectionName.work.contactDetails,
+                    "fax": sectionName.fax.contactDetails
+                },
+                "emailAddresses":sectionName.emailInfo
+            },
+            "employementInfo": {
+                "employmentStatus": sectionName.empStatus.key || "",
+                "industry": sectionName.empIndustry.key || "",
+                "occupation": sectionName.empOccupation || "",
+                "employerName": sectionName.empName || "",
+                "employerAddress": {
+                    "addressLine1": sectionName.empAddrLine1 || "",
+                    "addressLine2": sectionName.empAddrLine2 || "",
+                    "city": sectionName.empCity || "",
+                    "state": sectionName.empStateCity || "",
+                    "zip": sectionName.empZipcode || "",
+                }
+            },
+            "financialInfo": {
+                "annualIncome": sectionName.annualIncome.value || "",
+                "taxBracket": sectionName.taxBracket.taxbracket || "",
+                "netWorth": sectionName.networth.value || "",
+                "taxFilingStatus": sectionName.taxFilingStatus.value || "",
+            },
+            "militaryInfo": {
+                "servingStatus": sectionName.isMilitaryHistory || "",
+                "militaryStatus": sectionName.militaryStatus.key || "",
+                "branchOfService": sectionName.branchOfService.key || "",
+                "rank": sectionName.rank.key || "",
+                "serviceStartDate": sectionName.fromDateMilitary || "",
+                "serviceToDate": sectionName.toDateMilitary || "",
+                "commissionSource": sectionName.commissionSource || "",
+            }
+        };
+
+        return personalizePayload;
+    }
+
     getPayload = () => {
         const { navigation } = this.props;
         const { getParam } = navigation;
@@ -1339,17 +1413,17 @@ class OpenAccPageTwoComponent extends Component {
 
         const individualAccPayload = {
             "personalInfo": {
-                "prefix": personal.prefix || "",
+                "prefix": personal.prefix.value || "",
                 "firstName": personal.firstName || "",
                 "lastName": personal.lastName || "",
                 "suffix": personal.suffix || "",
                 "dateOfBirth": personal.dob || "",
-                "gender": personal.gender || "",
-                "maritalStatus": personal.maritalStatus || "",
-                "citizenship": personal.citizenship || "",
+                "gender": personal.gender.key || "",
+                "maritalStatus": personal.maritalStatus.key || "",
+                "citizenship": personal.citizenship.key || "",
                 "ssnTin": personal.socialSecurityNo || "",
                 "mailingAddress": {
-                    "addressType": personal.mailingAddressType || "",
+                    "addressType": personal.mailingAddressType.value || "",
                     "streetNbr": personal.addrLine1 || "",
                     "streetName": personal.addrLine2 || "",
                     "zip": personal.zipcode || "",
@@ -1358,7 +1432,7 @@ class OpenAccPageTwoComponent extends Component {
                 },
                 "isPhysAddrSameAsMailAddr": personal.isYourPhysicalAddresSame || "",
                 "physicalAddress": {
-                    "addressType": personal.isYourPhysicalAddresSame ? personal.mailingAddressType || "" : personal.mailingAddressType,
+                    "addressType": personal.isYourPhysicalAddresSame ? personal.mailingAddressType.value || "" : personal.mailingAddressType,
                     "streetNbr": personal.isYourPhysicalAddresSame ? personal.addrLine1 || "" : personal.addrLine1_Phy,
                     "streetName": personal.isYourPhysicalAddresSame ? personal.addrLine2 || "" : personal.addrLine2_Phy,
                     "zip": personal.isYourPhysicalAddresSame ? personal.zipcode || "" : personal.zipcode_Phy,
@@ -1366,27 +1440,16 @@ class OpenAccPageTwoComponent extends Component {
                     "state": personal.isYourPhysicalAddresSame ? personal.stateCity || "" : personal.stateCity_Phy,
                 },
                 "contactDetails": {
-                    "phoneNumber1": {
-                        "phoneNumber": personal.mobileNo || "",
-                        "phoneType": personal.phoneType || "",
-                        "contactDuring": personal.contactDuringMobNo || "Anytime"
-                    },
-                    "phoneNumber2": {
-                        "phoneNumber": personal.telePhoneNo2 || "",
-                        "phoneType": personal.phoneType2 || "",
-                        "contactDuring": personal.contactDuringTelePhone2 || ""
-                    },
-                    "phoneNumber3": {
-                        "phoneNumber": personal.telePhoneNo3 || "",
-                        "phoneType": personal.phoneType3 || "",
-                        "contactDuring": personal.contactDuringTelePhone3 || ""
-                    },
-                    "emailAddress": personal.emailAddress || ""
-                }
+                    "mobile": personal.mobile.contactDetails,
+                    "home": personal.home.contactDetails,
+                    "work": personal.work.contactDetails,
+                    "fax": personal.fax.contactDetails
+                },
+                "emailAddresses":personal.emailInfo
             },
             "employementInfo": {
-                "employmentStatus": personal.empStatus || "",
-                "industry": personal.empIndustry || "",
+                "employmentStatus": personal.empStatus.key || "",
+                "industry": personal.empIndustry.key || "",
                 "occupation": personal.empOccupation || "",
                 "employerName": personal.empName || "",
                 "employerAddress": {
@@ -1398,16 +1461,16 @@ class OpenAccPageTwoComponent extends Component {
                 }
             },
             "financialInfo": {
-                "annualIncome": personal.annualIncome || "",
-                "taxBracket": personal.taxBracket || "",
-                "netWorth": personal.networth || "",
-                "taxFilingStatus": personal.taxFilingStatus || "",
+                "annualIncome": personal.annualIncome.value || "",
+                "taxBracket": personal.taxBracket.taxbracket || "",
+                "netWorth": personal.networth.value || "",
+                "taxFilingStatus": personal.taxFilingStatus.value || "",
             },
             "militaryInfo": {
                 "servingStatus": personal.isMilitaryHistory || "",
-                "militaryStatus": personal.militaryStatus || "",
-                "branchOfService": personal.branchOfService || "",
-                "rank": personal.rank || "",
+                "militaryStatus": personal.militaryStatus.key || "",
+                "branchOfService": personal.branchOfService.key || "",
+                "rank": personal.rank.key || "",
                 "serviceStartDate": personal.fromDateMilitary || "",
                 "serviceToDate": personal.toDateMilitary || "",
                 "commissionSource": personal.commissionSource || "",
@@ -1712,31 +1775,38 @@ class OpenAccPageTwoComponent extends Component {
             "regType": accType || ""
         };
 
+        let tempJointPersonalInfo = {};
+
         switch (accType) {
             case "Individual Account":
                 payload = {
                     ...payload,
-                    ...individualAccPayload
+                    ...this.generatePersonalInfoPayload("personal")
                 };
                 break;
             case "Joint Account":
+                tempJointPersonalInfo = this.generatePersonalInfoPayload("jointOwner");
+              //  tempJointPersonalInfo.personalInfo.suffix = jointOwner.suffix.value;
                 payload = {
                     ...payload,
-                    ...individualAccPayload,
-                    ...jointAccPayload
+                    ...this.generatePersonalInfoPayload("personal"),
+                    "jointOwner": {
+                        "relation": jointOwner.relationshipToAcc.value || "",
+                         ...tempJointPersonalInfo,
+                    }
                 };
                 break;
             case "Retirement Account":
                 payload = {
                     ...payload,
-                    ...individualAccPayload,
+                    ...this.generatePersonalInfoPayload("personal"),
                     ...retirementAccPayload
                 };
                 break;
             case "UGMA/UTMA Account":
                 payload = {
                     ...payload,
-                    ...individualAccPayload,
+                    ...this.generatePersonalInfoPayload("personal"),
                     ...investChildPayload
 
                 };
@@ -2340,7 +2410,7 @@ class OpenAccPageTwoComponent extends Component {
                     inputField = "phoneNumber";
                     //  errMsgCount += 1;
 
-                } else if (this.isEmpty(tempObj.contactDuring) && tempObj.isPrimary) {
+                } else if (this.isEmpty(tempObj.contactDuring.value) && tempObj.isPrimary) {
                     tempErrMsg = gblStrings.accManagement.emptyCallTimePreference;
                     inputField = "contactDuring";
                     //  errMsgCount += 1;
@@ -2493,7 +2563,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (stateKey === "childBeneficiary") {
             inputRefKey = "_childben";
         }
-        if (this.isEmpty(sectionName.relationshipToAcc) && stateKey === "jointOwner") {
+        if (sectionName.relationshipToAcc && this.isEmpty(sectionName.relationshipToAcc.value) && stateKey === "jointOwner") {
             errMsg = gblStrings.accManagement.emptyRelationToAccMsg;
             input = 'relationshipToAcc';
             errMsgCount += 1;
@@ -2512,17 +2582,17 @@ class OpenAccPageTwoComponent extends Component {
             input = 'dob';
             errMsgCount += 1;
 
-        } else if (this.isEmpty(sectionName.gender)) {
+        } else if (this.isEmpty(sectionName.gender.value)) {
             errMsg = gblStrings.accManagement.emptyGenderMsg;
             input = 'gender';
             errMsgCount += 1;
 
-        } else if (this.isEmpty(sectionName.maritalStatus)) {
+        } else if (this.isEmpty(sectionName.maritalStatus.value)) {
             errMsg = gblStrings.accManagement.emptyMaritalMsg;
             input = 'maritalStatus';
             errMsgCount += 1;
 
-        } else if (this.isEmpty(sectionName.citizenship)) {
+        } else if (this.isEmpty(sectionName.citizenship.value)) {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
             input = 'citizenship';
             errMsgCount += 1;
@@ -2550,7 +2620,7 @@ class OpenAccPageTwoComponent extends Component {
           
         }   
         */
-        else if (this.isEmpty(sectionName.mailingAddressType)) {
+        else if (this.isEmpty(sectionName.mailingAddressType.value)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
             input = 'mailingAddressType';
             errMsgCount += 1;
@@ -2676,12 +2746,12 @@ class OpenAccPageTwoComponent extends Component {
             input = 'socialSecurityNo';
             errMsgCount += 1;
 
-        } else if (this.isEmpty(sectionName.empStatus)) {
+        } else if (this.isEmpty(sectionName.empStatus.value)) {
             errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
             input = 'empStatus';
             errMsgCount += 1;
 
-        } else if (sectionName.empStatus === "Others" && this.isEmpty(sectionName.empStatusForOther)) {
+        } else if (sectionName.empStatus.value === "Others" && this.isEmpty(sectionName.empStatusForOther)) {
             errMsg = gblStrings.accManagement.emptyEmploymentStatusOthersMsg;
             input = 'empStatusForOther';
             errMsgCount += 1;
@@ -3724,8 +3794,8 @@ class OpenAccPageTwoComponent extends Component {
                     label={radioData[+i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel=""
-                    selected={!!((sectionName[`${radioName}`] !== null && sectionName[`${radioName}`] === radioData[+i].value))}
-                    onPress={this.onPressRadio(sectionKey, radioName, radioData[+i].value)}
+                    selected={!!((sectionName[`${radioName}`].value !== null && sectionName[`${radioName}`].value === radioData[+i].value))}
+                    onPress={this.onPressRadio(sectionKey, radioName, radioData[+i])}
 
                 />
             );
@@ -4053,7 +4123,7 @@ class OpenAccPageTwoComponent extends Component {
                 dropDownTextName={styles.dropDownTextName}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
-                dropDownValue={sectionName[`${stateKey}`]}
+                dropDownValue={dropDownName === "taxBracketDropDown" ? sectionName[`${stateKey}`].taxbracket :sectionName[`${stateKey}`].value}
                 selectedDropDownValue={this.onSelectedDropDownValue(section, stateKey, dropDownName)}
                 dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
@@ -4076,7 +4146,7 @@ class OpenAccPageTwoComponent extends Component {
             this.setState(prevState => ({
                 [section]: {
                     ...prevState[`${section}`],
-                    [stateKey]: item.value,
+                    [stateKey]: item,
                     // [dropDownName]: false,
                     rankKey: tempRankKey,
                     [`${stateKey}Validation`]: true,
@@ -4093,9 +4163,9 @@ class OpenAccPageTwoComponent extends Component {
             this.setState(prevState => ({
                 [section]: {
                     ...prevState[`${section}`],
-                    [stateKey]: item.value,
+                    [stateKey]: item,
                     //  [dropDownName]: false,
-                    taxBracket: item.taxbracket,
+                    taxBracket: item,
                     [`${stateKey}Validation`]: true,
 
                 }
@@ -4105,7 +4175,7 @@ class OpenAccPageTwoComponent extends Component {
             this.setState(prevState => ({
                 [section]: {
                     ...prevState[`${section}`],
-                    [stateKey]: item.value,
+                    [stateKey]: item,
                     // [dropDownName]: false,
                     [`${stateKey}Validation`]: true,
 
@@ -4145,7 +4215,8 @@ class OpenAccPageTwoComponent extends Component {
         const contactDetails = phoneInfo.contactDetails ? phoneInfo.contactDetails : [];
 
         const newItems = [...contactDetails];
-        newItems[+objIndex][`${keyName}`] = item.key;
+        newItems[+objIndex][`${keyName}`] = item;
+        newItems[+objIndex].callTimePreference = item.value;
         newItems[+objIndex][`${keyName}Validation`] = true;
 
         this.setState(prevState => ({
@@ -4965,7 +5036,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             {
 
-                                sectionName.citizenship !== "U.S" &&
+                                sectionName.citizenship.value !== "U.S" &&
                                 (
                                     <View style={styles.nonUSView}>
 
@@ -5497,7 +5568,7 @@ class OpenAccPageTwoComponent extends Component {
                                 //  value={personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
                                 value={item.phoneNumber}
                                 onChangeText={this.onChangeTextPhoneInfo(sectionKey, keyName, "phoneNumber", index)}
-                                onSubmitEditing={this.onSubmitEditing(this[`${sectionKey}${keyName}contactDuring${index}`])}
+                                onSubmitEditing={this.onSubmitEditing(this[`${sectionKey}${keyName}callTimePreference${index}`])}
                                 errorFlag={!item.phoneNumberValidation}
                                 errorText={errMsg}
                             />
@@ -5508,7 +5579,7 @@ class OpenAccPageTwoComponent extends Component {
                                 dropDownTextName={styles.dropDownTextName}
                                 dropDownName={gblStrings.accManagement.contactMeDuring}
                                 data={contactDuringData}
-                                dropDownValue={item.contactDuring}
+                                dropDownValue={item.contactDuring.value}
                                 selectedDropDownValue={this.onSelectedPhoneInfoDropDownValue(sectionKey, keyName, "contactDuring", index)}
                                 dropDownPostition={styles.dropDownPostition}
                                 errorFlag={!item.contactDuringValidation}
@@ -5834,7 +5905,7 @@ class OpenAccPageTwoComponent extends Component {
                                 isOptional: false
                             })
                             }
-                            {sectionName.empStatus === "Others" && (
+                            {sectionName.empStatus.value === "Others" && (
                                 <GInputComponent
                                     inputref={this.setInputRef(`empStatusForOther${inputRefKey}`)}
                                     propInputStyle={styles.customTxtBox}
@@ -5851,7 +5922,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             {
                                 //  Render employment fields if user have employment history
-                                (sectionName.empStatus !== "" && sectionName.empStatus !== "Unemployed" && sectionName.empStatus !== "Homemaker" && sectionName.empStatus !== "Student" && sectionName.empStatus !== "Retired") && (
+                                (sectionName.empStatus.value && sectionName.empStatus.value !== "" && sectionName.empStatus.value !== "Unemployed" && sectionName.empStatus.value !== "Homemaker" && sectionName.empStatus.value !== "Student" && sectionName.empStatus.value !== "Retired") && (
                                     <View style={styles.childSectionGrp}>
 
                                         {this.renderCustomDropDown({
@@ -5862,7 +5933,7 @@ class OpenAccPageTwoComponent extends Component {
                                             isOptional: false
                                         })
                                         }
-                                        {sectionName.empIndustry === "Other Industry" && (
+                                        {sectionName.empIndustry.value && sectionName.empIndustry.value === "Other Industry" && (
                                             <GInputComponent
                                                 inputref={this.setInputRef(`empIndustryForOther${inputRefKey}`)}
                                                 propInputStyle={styles.customTxtBox}

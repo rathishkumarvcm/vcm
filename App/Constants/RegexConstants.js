@@ -1,3 +1,5 @@
+/* eslint-disable security/detect-unsafe-regex */
+
 /* **************************\
 Component: Regex
 Explanation:
