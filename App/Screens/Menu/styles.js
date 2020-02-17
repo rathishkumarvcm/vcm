@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import * as COLORS from "../../Constants/ColorConstants";
 
 const styles = StyleSheet.create({
     buttonCancelActionStyle: {
@@ -58,24 +59,31 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 20,
     },
+    logoStyle: { marginHorizontal: scaledHeight(20), width: '70%' },
+    logoutContainer: {
+        flexDirection: 'row', justifyContent: 'center',
+        marginTop: scaledHeight(10),
+        padding: scaledHeight(5),
+    },
     menuContainer: {
         flex: 1, flexDirection: 'row', justifyContent: 'center',
-        padding: 5,
-        marginTop: 10
+        padding: scaledHeight(5),
+        marginTop: scaledHeight(10)
     },
     menuIcon: {
         height: 25,
-        marginHorizontal: 5,
-        padding: 5,
+        marginHorizontal: scaledHeight(5),
+        padding: scaledHeight(5),
         width: 25
     },
     menuItem: {
         borderColor: '#d6d7da',
         borderWidth: 0.5,
-        padding: 10
+        padding: scaledHeight(10)
     },
     menuName: {
         flex: 1,
+        textAlignVertical: "center"
     },
     modalContainerStyle: {
         backgroundColor: '#FFFFFF',
@@ -93,6 +101,8 @@ const styles = StyleSheet.create({
         // marginHorizontal: 20, marginVertical: 50,
         backgroundColor: "pink"
     },
+    rightModalIconStyle: { margin: 5 },
+    rightModalImageContainer: { alignItems: 'center', backgroundColor: COLORS.DARK_BLUE, padding: 10 },
     rightModalStyle: {
         backgroundColor: 'transparent', flex: 1,
         margin: 0

@@ -5,12 +5,14 @@ import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import Modal from 'react-native-modal';
-import { GIcon } from '../../CommonComponents';
 import styles from './styles';
+import gblStrings from '../../Constants/GlobalStrings';
 import { tabMoreActions } from '../../Shared/Actions';
 import { navigate } from '../../Navigation/navigationService';
 import { setModalVisible } from '../../Shared/Actions/TabMoreAction';
-import onlineMethodImg from '../../Images/onlinemethod1.png';
+import logoutImg from '../../Images/logoutGreen.png';
+import whiteLogo from '../../Images/logoVCM.png';
+import roundLogoImg from '../../Images/roundWhiteVCM.png';
 
 class BaseViewComponent extends React.Component {
   closeModal = () => {
@@ -50,22 +52,22 @@ class BaseViewComponent extends React.Component {
           isVisible={isMoreModalVisible}
         >
           <SafeAreaView style={styles.rightModalViewStyle}>
-            <TouchableWithoutFeedback
-              onPress={this.closeModal}
-            >
+            <View style={styles.rightModalImageContainer}>
+              <Image source={roundLogoImg} />
+              <Image resizeMode="contain" style={styles.logoStyle} source={whiteLogo} />
+            </View>
+            <TouchableWithoutFeedback onPress={this.closeModal}>
               <Text style={styles.menuName}>Close</Text>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={this.navigateToLogout}>
-              <View style={styles.menuContainer}>
-                <Image style={styles.menuIcon} source={onlineMethodImg} />
-                <Text style={styles.menuName}>Logout</Text>
-                <GIcon name="chevron-right" type="material" size={25} color="#4D0000" />
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={this.navigateToMemberSupport}
-            >
+            <TouchableWithoutFeedback onPress={this.navigateToMemberSupport}>
               <Text style={styles.menuName}>MSR</Text>
+            </TouchableWithoutFeedback>
+            <View style={styles.dividerLine} />
+            <TouchableWithoutFeedback onPress={this.navigateToLogout}>
+              <View style={styles.logoutContainer}>
+                <Image style={styles.rightModalIconStyle} source={logoutImg} />
+                <Text style={styles.menuName}>{gblStrings.common.logout}</Text>
+              </View>
             </TouchableWithoutFeedback>
           </SafeAreaView>
         </Modal>

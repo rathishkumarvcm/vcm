@@ -65,7 +65,8 @@ export default {
         calender: "MM/DD/YYYY",
         send:"Send",
         verify:"Verify",
-        resend:"Resend"
+        resend:"Resend",
+        logout:"Log out"
     },
     login: {
         imageRequest: "imageRequest",
