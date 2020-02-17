@@ -190,7 +190,9 @@ import RMDDashboardComponent from './Screens/RMDDashboard';
 
 // MSR
 import MSRAccessFormList from './Screens/MSRAccessForms';
-import FloatingButtonComponent from './Screens/MSRServiceRequest';
+import MSRServiceRequestScreen from './Screens/MSRServiceRequest';
+import SecureMessageComponent from './Screens/MSRSecureMessage';
+
 
 import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
 
@@ -254,7 +256,7 @@ const BottomTabNavigator = createBottomTabNavigator({
         },
     },
     invest: {
-        screen: FloatingButtonComponent,
+        screen: MSRServiceRequestScreen,
         navigationOptions: {
             tabBarIcon: (obj) => customTab({ object: obj, route: "invest" }),
             tabBarLabel: 'Invest',
@@ -272,7 +274,10 @@ const DrawerNavigator = createDrawerNavigator({
     editMilitaryInfo: {
         screen: EditMilitaryInfo,
     },
-    NotificationTabs: NotificationTabNavigator,
+    notificationTabs: NotificationTabNavigator,
+    msrLandingScreen: MSRServiceRequestScreen,
+    msrSecureMessage: SecureMessageComponent
+
 }, {
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
@@ -1187,7 +1192,7 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    changePassword:{
+    changePassword: {
         screen: changePasswordComponent,
         navigationOptions: {
             header: null,

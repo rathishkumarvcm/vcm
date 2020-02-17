@@ -1,3 +1,3 @@
-import FloatingButtonComponent from './MSRServiceRequestContainer';
+import MSRServiceRequestScreen from './MSRServiceRequestContainer';
 
-export default FloatingButtonComponent;
+export default MSRServiceRequestScreen;

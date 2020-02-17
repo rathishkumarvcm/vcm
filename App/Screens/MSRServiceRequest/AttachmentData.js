@@ -1,14 +1,63 @@
 import React from 'react';
-import { Text, View, Platform, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Text, View, Platform, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import * as mime from 'react-native-mime-types';
 import DocumentPicker from 'react-native-document-picker';
-import { GIcon, GButtonComponent, showAlert } from '../../CommonComponents';
-import styles from './style';
+import { GIcon, showAlert } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import { scaledHeight } from '../../Utils/Resolution';
 
 const maxFileLimit = 10;
 const maxFileSize = 30;
+
+const style = StyleSheet.create({
+    columnContainer: {
+        flexDirection: 'column', flexGrow: 1,
+        padding: scaledHeight(12),
+    },
+    grayBorderContainer: {
+        alignItems: 'center',
+        borderColor: "#DEDEDF",
+        borderRadius: scaledHeight(4),
+        borderWidth: 1,
+        marginHorizontal: 0,
+        marginVertical: scaledHeight(10),
+        paddingVertical: scaledHeight(10),
+        //  height:"20%",
+        width: "100%"
+    },
+    grayText: {
+        color: "gray",
+        textAlignVertical: 'center'
+    },
+    itemContainer: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center' },
+    previewImage: {
+        flex: 0.3,
+        height: scaledHeight(70),
+        marginHorizontal: scaledHeight(10),
+        marginTop: scaledHeight(20),
+        width: scaledHeight(70),
+    },
+    uploadFileContainer: {
+        flexDirection: 'row',
+        marginTop: scaledHeight(10),
+    },
+    uploadFileDesc: {
+        color: '#707070',
+        flex: 0.8,
+        fontSize: scaledHeight(12),
+    },
+    uploadFileDivider: {
+        color: '#707070',
+        flex: 0.1,
+        fontSize: scaledHeight(12),
+    },
+    uploadFileTitle: {
+        color: '#707070',
+        flex: 0.5,
+        fontSize: scaledHeight(12),
+    },
+});
 
 class AttachmentData extends React.Component {
 
@@ -104,14 +153,11 @@ class AttachmentData extends React.Component {
         const { multipleFiles, showFileError, erFileMessage } = this.state;
 
         return (
-            <View style={styles.columnContainer}>
-                <View style={styles.grayBorderContainer}>
-                    <GButtonComponent
-                        buttonStyle={styles.selectFilesBtn}
-                        buttonText={gblStrings.accManagement.selectFiles}
-                        textStyle={styles.selectFilesBtnTxt}
-                        onPress={this.selectMultipleFile}
-                    />
+            <View style={style.columnContainer}>
+                <View style={style.grayBorderContainer}>
+                    <TouchableOpacity onPress={this.selectMultipleFile}>
+                        <Text>{gblStrings.accManagement.selectFiles}</Text>
+                    </TouchableOpacity>
                     <GIcon
                         name="file-upload"
                         type="material"
@@ -119,15 +165,15 @@ class AttachmentData extends React.Component {
                         color="#E9E4E4"
                     />
                     <TouchableOpacity onPress={this.uploadSelectedFiles}>
-                        <Text style={styles.uploadText}>
+                        <Text style={style.uploadText}>
                             {gblStrings.common.upload}
                         </Text>
-                        <Text style={styles.grayBoldText}>Selected files count {multipleFiles.length}</Text>
+                        <Text style={style.grayText}>Selected files count {multipleFiles.length}</Text>
                     </TouchableOpacity>
 
                     {showFileError && (
-                        <View style={styles.selectedFileDescContainer}>
-                            <Text style={styles.fileDesctextStyleError}>
+                        <View style={style.selectedFileDescContainer}>
+                            <Text style={style.fileDesctextStyleError}>
                                 {erFileMessage}
                             </Text>
                         </View>
@@ -140,11 +186,11 @@ class AttachmentData extends React.Component {
                         // eslint-disable-next-line react-perf/jsx-no-new-object-as-prop
                         const imageConfig = { "uri": item.uri };
                         return (
-                            <View style={styles.itemContainer} key={item.name}>
-                                <Text style={styles.smallGrayText}>
+                            <View style={style.itemContainer} key={item.name}>
+                                <Text style={style.smallGrayText}>
                                     {item.name ? item.name : ''}   Size {item.size} MB
                                 </Text>
-                                <Image style={styles.previewImage}
+                                <Image style={style.previewImage}
                                     source={imageConfig}
                                 // source={this.requireImageUri}
                                 />
@@ -153,43 +199,43 @@ class AttachmentData extends React.Component {
                     })}
                 </ScrollView>
                 {/* Show File Size limit details */}
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
+                <View style={style.uploadFileContainer}>
+                    <Text style={style.uploadFileTitle}>
                         {gblStrings.accManagement.attachLimit}
                     </Text>
-                    <Text style={styles.uploadFileDivider}>
+                    <Text style={style.uploadFileDivider}>
                         {gblStrings.accManagement.attachdivider}
                     </Text>
-                    <Text style={styles.uploadFileDesc}>
+                    <Text style={style.uploadFileDesc}>
                         {limit} file
                     </Text>
                 </View>
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
+                <View style={style.uploadFileContainer}>
+                    <Text style={style.uploadFileTitle}>
                         {gblStrings.accManagement.sizeLimitPerFile}
                     </Text>
-                    <Text style={styles.uploadFileDivider}>
+                    <Text style={style.uploadFileDivider}>
                         {gblStrings.accManagement.attachdivider}
                     </Text>
-                    <Text style={styles.uploadFileDesc}>
+                    <Text style={style.uploadFileDesc}>
                         {size} MB
                     {/* {gblStrings.accManagement.megaBytes} */}
                     </Text>
                 </View>
 
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
+                <View style={style.uploadFileContainer}>
+                    <Text style={style.uploadFileTitle}>
                         {gblStrings.accManagement.totalSizeLimit}
                     </Text>
-                    <Text style={styles.uploadFileDivider}>
+                    <Text style={style.uploadFileDivider}>
                         {gblStrings.accManagement.attachdivider}
                     </Text>
-                    <Text style={styles.uploadFileDesc}>
+                    <Text style={style.uploadFileDesc}>
                         {gblStrings.accManagement.megaBytes}
                     </Text>
                 </View>
 
-                <View style={styles.uploadFileContainer}>
+                <View style={style.uploadFileContainer}>
                     <Text style={styles.uploadFileTitle}>
                         {gblStrings.accManagement.fileTypesAllow}
                     </Text>

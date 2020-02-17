@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import MSRServiceRequestScreen from './MSRServiceRequestScreen';
+import SecureMessageComponent from './SecureMessageComponent';
 import { msrServiceRequestActions } from "../../Shared/Actions";
 
 
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MSRServiceRequestScreen);
+  )(SecureMessageComponent);

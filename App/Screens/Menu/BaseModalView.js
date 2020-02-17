@@ -30,7 +30,7 @@ class BaseViewComponent extends React.Component {
   navigateToMemberSupport = () => {
     const { dispatch } = this.props;
     dispatch(setModalVisible(false));
-    navigate('draweriOS');
+    navigate('msrLandingScreen');
   }
 
   render() {
@@ -51,24 +51,26 @@ class BaseViewComponent extends React.Component {
           useNativeDriver
           isVisible={isMoreModalVisible}
         >
-          <SafeAreaView style={styles.rightModalViewStyle}>
-            <View style={styles.rightModalImageContainer}>
-              <Image source={roundLogoImg} />
-              <Image resizeMode="contain" style={styles.logoStyle} source={whiteLogo} />
-            </View>
-            <TouchableWithoutFeedback onPress={this.closeModal}>
-              <Text style={styles.menuName}>Close</Text>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={this.navigateToMemberSupport}>
-              <Text style={styles.menuName}>MSR</Text>
-            </TouchableWithoutFeedback>
-            <View style={styles.dividerLine} />
-            <TouchableWithoutFeedback onPress={this.navigateToLogout}>
-              <View style={styles.logoutContainer}>
-                <Image style={styles.rightModalIconStyle} source={logoutImg} />
-                <Text style={styles.menuName}>{gblStrings.common.logout}</Text>
+          <SafeAreaView>
+            <View style={styles.rightModalViewStyle}>
+              <View style={styles.rightModalImageContainer}>
+                <Image source={roundLogoImg} />
+                <Image resizeMode="contain" style={styles.logoStyle} source={whiteLogo} />
               </View>
-            </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={this.closeModal}>
+                <Text style={styles.menuName}>Close</Text>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={this.navigateToMemberSupport}>
+                <Text style={styles.menuName}>{gblStrings.msrServiceRequest.needAssistent}</Text>
+              </TouchableWithoutFeedback>
+              <View style={styles.dividerLine} />
+              <TouchableWithoutFeedback onPress={this.navigateToLogout}>
+                <View style={styles.logoutContainer}>
+                  <Image style={styles.rightModalIconStyle} source={logoutImg} />
+                  <Text style={styles.menuName}>{gblStrings.common.logout}</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
           </SafeAreaView>
         </Modal>
       </View>

@@ -1515,7 +1515,7 @@ export default {
         rmdCalculator_info: "Use this calculator to determine your Required Minimum Distribution."
     },
     msrServiceRequest: {
-        needAssistent: "NEED ASSISTENT?",
+        needAssistent: "Need Assistance",
         vcmCustomerCareNumber: "(888) 456-9200",
         mondayToFriday: "Monday - Friday",
         mondayToFridayTime: "7.00am - 8.00pm CT",
@@ -1529,6 +1529,7 @@ export default {
         victoryBusinessCalendar: "Victory Business Calendar",
         sendSecureMsg: "Send us secure message",
         liveChatAgent: "Live chat Agent",
+        newSecureMessage:"New Secure Message",
 
         topic: "Topic",
         account: "Account",
