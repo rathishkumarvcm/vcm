@@ -70,7 +70,10 @@ class OpenAccPageTwoComponent extends Component {
                 genderKeyValue: "",
                 maritalStatus: "",
                 maritalStatusDropDown: false,
-                citizenship: "U.S",
+                citizenship: {
+                    key :"us",
+                    value:"U.S"
+                }, 
                 residenceStatus: "",
                 countryOfCitizenship: "",
                 countryOfCitizenshipDropDown: false,
@@ -316,7 +319,10 @@ class OpenAccPageTwoComponent extends Component {
                 gender: "",
                 maritalStatus: "",
                 maritalStatusDropDown: false,
-                citizenship: "U.S",
+                citizenship: {
+                    key :"us",
+                    value:"U.S"
+                }, 
                 residenceStatus: "",
                 countryOfCitizenship: "",
                 countryOfCitizenshipDropDown: false,
